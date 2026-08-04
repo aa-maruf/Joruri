@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JORURI (জরুরি) — App Logic & Interactive Features (Phase 2 Implementation)
+   JORURI (জরুরি) — App Logic & Contact Management (Phase 3 Implementation)
    ========================================================================== */
 
 // 1. I18N DICTIONARY FOR INTERFACE STRINGS
@@ -18,6 +18,11 @@ const i18n = {
     emptyTitle: "No Contacts Found",
     emptyDesc: "No contacts match your current search query or selected category.",
     resetFiltersBtn: "Clear Search & Filters",
+    selectAll: "Select All",
+    selectedCount: "{count} selected",
+    clearSelection: "Clear Selection",
+    exportVCard: "vCard (.vcf)",
+    exportCSV: "CSV (.csv)",
     categories: {
       "All": "All",
       "Emergency": "Emergency",
@@ -44,6 +49,11 @@ const i18n = {
     emptyTitle: "কোনো নম্বর পাওয়া যায়নি",
     emptyDesc: "আপনার অনুসন্ধান বা ফিল্টারের সাথে কোনো সরকারি বা জরুরি সেবা নম্বর মিলছে না।",
     resetFiltersBtn: "অনুসন্ধান রিসেট করুন",
+    selectAll: "সব নির্বাচন করুন",
+    selectedCount: "{count}টি নির্বাচিত",
+    clearSelection: "নির্বাচন বাতিল",
+    exportVCard: "vCard (.vcf)",
+    exportCSV: "CSV (.csv)",
     categories: {
       "All": "সব",
       "Emergency": "জরুরি",
@@ -62,6 +72,7 @@ const i18n = {
 let currentLang = localStorage.getItem('joruri_lang') || 'en';
 let currentCategory = 'All';
 let searchQuery = '';
+const selectedIds = new Set();
 
 const categoryKeys = ["All", "Emergency", "Healthcare", "Government", "Law & Order", "Women & Children"];
 
@@ -69,6 +80,7 @@ const categoryKeys = ["All", "Emergency", "Healthcare", "Government", "Law & Ord
 document.addEventListener('DOMContentLoaded', () => {
   setupLanguageControls();
   setupSearchInput();
+  setupSelectionBarListeners();
   applyLanguage(currentLang);
 });
 
@@ -103,7 +115,39 @@ function setupSearchInput() {
   });
 }
 
-// 6. APPLY LANGUAGE TO UI & RE-RENDER
+// 6. SELECTION BAR LISTENERS
+function setupSelectionBarListeners() {
+  const selectAllCheckbox = document.getElementById('select-all-checkbox');
+  const clearSelectionBtn = document.getElementById('clear-selection-btn');
+  const btnExportVCard = document.getElementById('btn-export-vcard');
+  const btnExportCSV = document.getElementById('btn-export-csv');
+
+  if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener('change', (e) => {
+      toggleSelectAllVisible(e.target.checked);
+    });
+  }
+
+  if (clearSelectionBtn) {
+    clearSelectionBtn.addEventListener('click', () => {
+      clearSelection();
+    });
+  }
+
+  if (btnExportVCard) {
+    btnExportVCard.addEventListener('click', () => {
+      exportSelectedVCard();
+    });
+  }
+
+  if (btnExportCSV) {
+    btnExportCSV.addEventListener('click', () => {
+      exportSelectedCSV();
+    });
+  }
+}
+
+// 7. APPLY LANGUAGE TO UI & RE-RENDER
 function applyLanguage(lang) {
   const t = i18n[lang];
 
@@ -136,10 +180,21 @@ function applyLanguage(lang) {
   const searchInput = document.getElementById('search-input');
   if (searchInput) searchInput.placeholder = t.searchPlaceholder;
 
+  // Update Selection Bar Labels
+  const selectAllText = document.getElementById('select-all-text');
+  const clearSelectionBtn = document.getElementById('clear-selection-btn');
+  const labelExportVCard = document.getElementById('label-export-vcard');
+  const labelExportCSV = document.getElementById('label-export-csv');
+
+  if (selectAllText) selectAllText.textContent = t.selectAll;
+  if (clearSelectionBtn) clearSelectionBtn.textContent = t.clearSelection;
+  if (labelExportVCard) labelExportVCard.textContent = t.exportVCard;
+  if (labelExportCSV) labelExportCSV.textContent = t.exportCSV;
+
   // Render Category Filter Buttons
   renderCategoryFilters();
 
-  // Render Contacts Grid
+  // Render Contacts Grid & Selection Bar UI
   renderFilteredContacts();
 
   // Update Footer Text
@@ -151,7 +206,7 @@ function applyLanguage(lang) {
   if (footerCopyright) footerCopyright.textContent = t.footerCopyright;
 }
 
-// 7. RENDER CATEGORY FILTER BUTTONS
+// 8. RENDER CATEGORY FILTER BUTTONS
 function renderCategoryFilters() {
   const container = document.getElementById('category-filters');
   if (!container) return;
@@ -171,31 +226,19 @@ function renderCategoryFilters() {
   }).join('');
 }
 
-// 8. SELECT CATEGORY ACTION
+// 9. SELECT CATEGORY ACTION
 function selectCategory(catKey) {
   currentCategory = catKey;
   renderCategoryFilters();
   renderFilteredContacts();
 }
 
-// 9. FILTER LOGIC & CARD RENDERING
-function renderFilteredContacts() {
-  const grid = document.getElementById('contact-grid');
-  if (!grid) return;
+// 10. GET CURRENTLY VISIBLE CONTACTS
+function getCurrentlyVisibleContacts() {
+  if (typeof contactsData === 'undefined' || !Array.isArray(contactsData)) return [];
 
-  if (typeof contactsData === 'undefined' || !Array.isArray(contactsData)) {
-    grid.innerHTML = '<p class="error-msg">Error: Contact dataset could not be loaded.</p>';
-    return;
-  }
-
-  const t = i18n[currentLang];
-
-  // Filter contacts by active category and search query
-  const filtered = contactsData.filter(item => {
-    // Category match
+  return contactsData.filter(item => {
     const matchCategory = (currentCategory === 'All') || (item.category === currentCategory);
-
-    // Search query match
     let matchSearch = true;
     if (searchQuery) {
       const q = searchQuery;
@@ -210,9 +253,25 @@ function renderFilteredContacts() {
         (item.organization_bn && item.organization_bn.toLowerCase().includes(q))
       );
     }
-
     return matchCategory && matchSearch;
   });
+}
+
+// 11. FILTER LOGIC & CARD RENDERING
+function renderFilteredContacts() {
+  const grid = document.getElementById('contact-grid');
+  if (!grid) return;
+
+  if (typeof contactsData === 'undefined' || !Array.isArray(contactsData)) {
+    grid.innerHTML = '<p class="error-msg">Error: Contact dataset could not be loaded.</p>';
+    return;
+  }
+
+  const t = i18n[currentLang];
+  const filtered = getCurrentlyVisibleContacts();
+
+  // Update compact selection bar UI based on visible items
+  updateSelectionBarUI(filtered);
 
   // Empty State handling
   if (filtered.length === 0) {
@@ -228,7 +287,7 @@ function renderFilteredContacts() {
 
   // Render cards
   grid.innerHTML = filtered.map(item => {
-    // Select language-specific title and description
+    const isSelected = selectedIds.has(item.id);
     const title = currentLang === 'bn' ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
     const description = currentLang === 'bn' ? (item.description_bn || item.description_en) : (item.description_en || item.description_bn);
     
@@ -236,8 +295,16 @@ function renderFilteredContacts() {
     const isEmergency = item.category === 'Emergency';
 
     return `
-      <article class="contact-card ${isEmergency ? 'emergency-card' : ''}" data-id="${item.id}">
+      <article class="contact-card ${isEmergency ? 'emergency-card' : ''} ${isSelected ? 'selected' : ''}" data-id="${item.id}">
         <div class="card-header">
+          <label class="card-checkbox-wrapper" title="${t.selectAll}">
+            <input 
+              type="checkbox" 
+              class="card-checkbox" 
+              ${isSelected ? 'checked' : ''} 
+              onchange="toggleSelectContact('${item.id}', this.checked)"
+            >
+          </label>
           <span class="category-badge ${isEmergency ? 'badge-emergency' : ''}">${categoryLabel}</span>
         </div>
         <div class="card-body">
@@ -259,7 +326,135 @@ function renderFilteredContacts() {
   }).join('');
 }
 
-// 10. RESET FILTERS ACTION
+// 12. SELECTION HANDLERS
+function toggleSelectContact(id, isChecked) {
+  if (isChecked) {
+    selectedIds.add(id);
+  } else {
+    selectedIds.delete(id);
+  }
+
+  // Update card styling locally
+  const cardElement = document.querySelector(`.contact-card[data-id="${id}"]`);
+  if (cardElement) {
+    cardElement.classList.toggle('selected', isChecked);
+  }
+
+  const visibleItems = getCurrentlyVisibleContacts();
+  updateSelectionBarUI(visibleItems);
+}
+
+function toggleSelectAllVisible(isChecked) {
+  const visibleItems = getCurrentlyVisibleContacts();
+  visibleItems.forEach(item => {
+    if (isChecked) {
+      selectedIds.add(item.id);
+    } else {
+      selectedIds.delete(item.id);
+    }
+  });
+
+  renderFilteredContacts();
+}
+
+function clearSelection() {
+  selectedIds.clear();
+  renderFilteredContacts();
+}
+
+// 13. UPDATE SELECTION BAR UI (Compact Toolbar Sync)
+function updateSelectionBarUI(visibleItems = []) {
+  const t = i18n[currentLang];
+  const selectAllCheckbox = document.getElementById('select-all-checkbox');
+  const countBadge = document.getElementById('selected-count-badge');
+  const selectionActions = document.getElementById('selection-actions');
+
+  // Sync Select All checkbox state for currently visible items
+  if (selectAllCheckbox) {
+    const allVisibleSelected = visibleItems.length > 0 && visibleItems.every(item => selectedIds.has(item.id));
+    selectAllCheckbox.checked = allVisibleSelected;
+  }
+
+  const totalSelected = selectedIds.size;
+
+  if (totalSelected > 0) {
+    if (countBadge) {
+      countBadge.textContent = t.selectedCount.replace('{count}', formatCount(totalSelected, currentLang));
+    }
+    if (selectionActions) selectionActions.style.display = 'inline-flex';
+  } else {
+    if (selectionActions) selectionActions.style.display = 'none';
+  }
+}
+
+// 14. BANGLA NUMERAL FORMATTER
+function formatCount(num, lang) {
+  if (lang !== 'bn') return num.toString();
+  const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+  return num.toString().replace(/\d/g, d => bnDigits[d]);
+}
+
+// 15. MINIMAL vCARD EXPORT (Language Specific: Name + Phone Only)
+function exportSelectedVCard() {
+  const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
+  if (selectedItems.length === 0) return;
+
+  const isBn = currentLang === 'bn';
+  let vcard = '';
+
+  selectedItems.forEach(item => {
+    // Active language service name only
+    const name = isBn ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
+    vcard += 'BEGIN:VCARD\r\n';
+    vcard += 'VERSION:3.0\r\n';
+    vcard += `FN:${name}\r\n`;
+    vcard += `TEL;TYPE=CELL:${item.phone_number}\r\n`;
+    vcard += 'END:VCARD\r\n';
+  });
+
+  const fileName = isBn ? 'joruri-contacts-bn.vcf' : 'joruri-contacts-en.vcf';
+  downloadFile(vcard, fileName, 'text/vcard;charset=utf-8');
+}
+
+// 16. MINIMAL CSV EXPORT (Language Specific: Name + Phone Only with UTF-8 BOM)
+function exportSelectedCSV() {
+  const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
+  if (selectedItems.length === 0) return;
+
+  const isBn = currentLang === 'bn';
+  const nameHeader = isBn ? 'নাম' : 'Name';
+  const phoneHeader = isBn ? 'ফোন নম্বর' : 'Phone';
+
+  // UTF-8 Byte Order Mark (BOM) to ensure Excel displays Bangla text correctly
+  let csv = '\uFEFF';
+  csv += `"${nameHeader}","${phoneHeader}"\r\n`;
+
+  selectedItems.forEach(item => {
+    // Active language service name only
+    const name = isBn ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
+    const cleanName = name.replace(/"/g, '""');
+    const phone = item.phone_number.replace(/"/g, '""');
+    csv += `"${cleanName}","${phone}"\r\n`;
+  });
+
+  const fileName = isBn ? 'joruri-contacts-bn.csv' : 'joruri-contacts-en.csv';
+  downloadFile(csv, fileName, 'text/csv;charset=utf-8');
+}
+
+// Helper to trigger browser file download
+function downloadFile(content, fileName, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// 17. RESET FILTERS ACTION
 function resetFilters() {
   currentCategory = 'All';
   searchQuery = '';
@@ -269,7 +464,7 @@ function resetFilters() {
   renderFilteredContacts();
 }
 
-// 11. COPY TO CLIPBOARD HELPER
+// 18. COPY TO CLIPBOARD HELPER
 function copyToClipboard(text, btnElement) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => showCopyFeedback(btnElement)).catch(() => fallbackCopy(text, btnElement));

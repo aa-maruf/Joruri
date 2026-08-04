@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JORURI (জরুরি) — Phase 1 & 2 CSS Design System & Responsive Layout
+   JORURI (জরুরি) — Phase 1, 2 & 3 CSS Design System & Responsive Layout
    Ref: UI-DESIGN-SPEC.md
    ========================================================================== */
 
@@ -54,6 +54,14 @@ html[lang="bn"] body {
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+/* Accessibility Focus Ring */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2.5px solid var(--primary-green);
+  outline-offset: 2px;
 }
 
 /* 3. HEADER & NAVIGATION */
@@ -182,16 +190,16 @@ html[lang="bn"] body {
   font-size: 0.85rem;
 }
 
-/* 4. MAIN CONTENT & HERO (Refined Spacing: -15% top/bottom hero margin) */
+/* 4. MAIN CONTENT & HERO SECTION */
 .main-content {
-  padding-top: 2.15rem;
+  padding-top: 1.75rem;
   padding-bottom: 3.5rem;
 }
 
 .hero-section {
   text-align: center;
   max-width: 680px;
-  margin: 0 auto 1.7rem auto;
+  margin: 0 auto 1.35rem auto;
   width: 100%;
 }
 
@@ -201,7 +209,7 @@ html[lang="bn"] body {
   color: var(--text-primary);
   line-height: 1.25;
   letter-spacing: -0.02em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   word-break: normal;
   overflow-wrap: break-word;
 }
@@ -223,7 +231,7 @@ html[lang="bn"] .hero-description {
 /* 5. SEARCH BAR */
 .search-section {
   max-width: 640px;
-  margin: 0 auto 1.75rem auto;
+  margin: 0 auto 1.5rem auto;
   width: 100%;
 }
 
@@ -267,7 +275,7 @@ html[lang="bn"] .search-input {
 
 /* 6. CATEGORY FILTERS */
 .categories-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
   width: 100%;
 }
 
@@ -309,7 +317,113 @@ html[lang="bn"] .category-btn {
   color: #FFFFFF;
 }
 
-/* 7. CONTACT CARDS GRID */
+/* 7. COMPACT SELECTION TOOLBAR (PHASE 3 ADJ.) */
+.selection-toolbar-section {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.selection-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0 0.25rem;
+}
+
+.select-all-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.select-all-label:hover {
+  color: var(--text-primary);
+}
+
+html[lang="bn"] .select-all-label {
+  font-family: var(--font-bn);
+}
+
+.select-all-checkbox, .card-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-green);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.selection-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.selected-count-badge {
+  font-size: 0.825rem;
+  font-weight: 700;
+  background-color: #DCFCE7;
+  color: var(--primary-green);
+  padding: 0.2rem 0.65rem;
+  border-radius: 12px;
+  border: 1px solid #86EFAC;
+}
+
+html[lang="bn"] .selected-count-badge {
+  font-family: var(--font-bn);
+}
+
+.btn-text-action {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--emergency-red);
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  text-decoration: underline;
+}
+
+html[lang="bn"] .btn-text-action {
+  font-family: var(--font-bn);
+}
+
+.btn-export {
+  background-color: #FFFFFF;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-height: 36px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.btn-export:hover {
+  background-color: #F8FAFC;
+  border-color: var(--primary-green);
+  color: var(--primary-green);
+}
+
+html[lang="bn"] .btn-export {
+  font-family: var(--font-bn);
+}
+
+/* 8. CONTACT CARDS GRID */
 .contacts-section {
   width: 100%;
 }
@@ -331,10 +445,26 @@ html[lang="bn"] .category-btn {
   justify-content: space-between;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
   width: 100%;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.contact-card.selected {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 1px var(--primary-green), 0 2px 5px rgba(0, 103, 71, 0.08);
+  background-color: #FAFDFB;
 }
 
 .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 0.75rem;
+}
+
+.card-checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .category-badge {
@@ -363,7 +493,7 @@ html[lang="bn"] .category-badge {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
   line-height: 1.35;
 }
 
@@ -376,7 +506,7 @@ html[lang="bn"] .service-title {
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.45;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   min-height: 2.6rem;
 }
 
@@ -389,7 +519,7 @@ html[lang="bn"] .service-description {
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.03em;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   font-variant-numeric: tabular-nums;
   font-family: var(--font-en);
 }
@@ -420,7 +550,7 @@ html[lang="bn"] .btn {
   font-family: var(--font-bn);
 }
 
-/* Call Button (Primary Action) */
+/* Call Button (Primary Action - Prominent & Dominant) */
 .btn-call {
   flex: 2;
   background-color: var(--primary-green);
@@ -437,6 +567,10 @@ html[lang="bn"] .btn {
 
 .btn-call-emergency:hover {
   background-color: var(--emergency-red-hover);
+}
+
+.btn-call-emergency:focus-visible {
+  outline-color: var(--emergency-red);
 }
 
 /* Copy Button (Secondary Action) */
@@ -488,7 +622,7 @@ html[lang="bn"] .empty-desc {
   margin-bottom: 1.25rem;
 }
 
-/* 8. FOOTER */
+/* 9. FOOTER */
 .site-footer {
   width: 100%;
   background-color: var(--card-bg);
@@ -521,7 +655,7 @@ html[lang="bn"] .empty-desc {
   color: #94A3B8;
 }
 
-/* 9. RESPONSIVE BREAKPOINTS (Mobile & Tablet Optimization) */
+/* 10. RESPONSIVE BREAKPOINTS (Mobile & Tablet Optimization) */
 
 /* Tablet (2 columns) */
 @media (max-width: 900px) {
@@ -580,30 +714,30 @@ html[lang="bn"] .empty-desc {
     font-size: 0.875rem;
   }
 
-  /* Hero adjustments for mobile width (-15% vertical spacing) */
+  /* Hero adjustments for mobile width */
   .main-content {
-    padding-top: 1.25rem;
-    padding-bottom: 2.75rem;
+    padding-top: 1rem;
+    padding-bottom: 2.5rem;
   }
 
   .hero-section {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .hero-title {
     font-size: 1.35rem;
     line-height: 1.3;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
   }
 
   .hero-description {
-    font-size: 0.95rem;
+    font-size: 0.925rem;
     line-height: 1.45;
   }
 
   /* Search field full mobile content width */
   .search-section {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .search-input {
@@ -617,7 +751,7 @@ html[lang="bn"] .empty-desc {
 
   /* Horizontally scrollable Category Filters on Mobile */
   .categories-section {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.25rem;
   }
 
   .category-filters {
@@ -641,6 +775,15 @@ html[lang="bn"] .empty-desc {
     font-size: 0.875rem;
   }
 
+  .selection-toolbar {
+    padding: 0;
+  }
+
+  .selection-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   /* Single Column Cards Layout taking full content width */
   .contact-grid {
     grid-template-columns: 1fr;
@@ -658,12 +801,12 @@ html[lang="bn"] .empty-desc {
   .service-description {
     font-size: 0.875rem;
     min-height: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
   }
 
   .phone-number-display {
     font-size: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
   }
 
   .card-actions {
