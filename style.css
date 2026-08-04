@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JORURI (জরুরি) — Phase 1, 2 & 3 CSS Design System & Responsive Layout
+   JORURI (জরুরি) — Phase 1 to 6 CSS Design System & Responsive Layout
    Ref: UI-DESIGN-SPEC.md
    ========================================================================== */
 
@@ -15,6 +15,7 @@
   --primary-green-hover: #004d35;
   --emergency-red: #DA291C;
   --emergency-red-hover: #b81f14;
+  --google-blue: #1a73e8;
   --tag-bg: #E2E8F0;
 
   /* Fonts */
@@ -317,7 +318,7 @@ html[lang="bn"] .category-btn {
   color: #FFFFFF;
 }
 
-/* 7. COMPACT SELECTION TOOLBAR (PHASE 3 ADJ.) */
+/* 7. COMPACT SELECTION TOOLBAR & GOOGLE AUTH (PHASE 3 & 6) */
 .selection-toolbar-section {
   width: 100%;
   margin-bottom: 1.25rem;
@@ -331,6 +332,13 @@ html[lang="bn"] .category-btn {
   gap: 0.75rem;
   flex-wrap: wrap;
   padding: 0 0.25rem;
+}
+
+.selection-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .select-all-label {
@@ -358,6 +366,64 @@ html[lang="bn"] .select-all-label {
   accent-color: var(--primary-green);
   cursor: pointer;
   border-radius: 4px;
+}
+
+/* Google Auth Status Indicators */
+.google-auth-status {
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-connect-google {
+  background-color: #FFFFFF;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+}
+
+.btn-connect-google:hover {
+  border-color: var(--google-blue);
+  color: var(--google-blue);
+}
+
+html[lang="bn"] .btn-connect-google {
+  font-family: var(--font-bn);
+}
+
+.google-connected-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #15803D;
+  background-color: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+}
+
+html[lang="bn"] .google-connected-badge {
+  font-family: var(--font-bn);
+}
+
+.btn-text-disconnect {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
 }
 
 .selection-actions {
@@ -417,6 +483,11 @@ html[lang="bn"] .btn-text-action {
   background-color: #F8FAFC;
   border-color: var(--primary-green);
   color: var(--primary-green);
+}
+
+.btn-export-google:hover {
+  border-color: var(--google-blue);
+  color: var(--google-blue);
 }
 
 html[lang="bn"] .btn-export {
@@ -526,7 +597,7 @@ html[lang="bn"] .service-description {
 
 .card-actions {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   width: 100%;
 }
 
@@ -538,7 +609,7 @@ html[lang="bn"] .service-description {
   font-family: var(--font-en);
   font-size: 0.95rem;
   font-weight: 700;
-  padding: 0.7rem 1.25rem;
+  padding: 0.7rem 1rem;
   border-radius: var(--radius-sm);
   text-decoration: none;
   cursor: pointer;
@@ -590,6 +661,124 @@ html[lang="bn"] .btn {
   background-color: #DCFCE7;
   color: #166534;
   border-color: #86EFAC;
+}
+
+/* Google Card Action Button */
+.btn-google-card {
+  flex: 0.8;
+  background-color: #FFFFFF;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  font-size: 0.825rem;
+  font-weight: 600;
+  padding: 0.5rem 0.6rem;
+  transition: all 0.15s ease;
+}
+
+.btn-google-card:hover {
+  border-color: var(--google-blue);
+  color: var(--google-blue);
+}
+
+.btn-google-card.added {
+  background-color: #DCFCE7;
+  color: #166534;
+  border-color: #86EFAC;
+}
+
+/* Modal Confirmation Dialog */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+  border: 1px solid var(--border-color);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+html[lang="bn"] .modal-title,
+html[lang="bn"] .modal-desc {
+  font-family: var(--font-bn);
+}
+
+.modal-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.toast {
+  background-color: #0F172A;
+  color: #FFFFFF;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.25s ease;
+  pointer-events: auto;
+  max-width: 380px;
+}
+
+html[lang="bn"] .toast {
+  font-family: var(--font-bn);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-success {
+  background-color: #006747;
+}
+
+.toast-warning {
+  background-color: #D97706;
 }
 
 /* Empty State */
@@ -810,13 +999,24 @@ html[lang="bn"] .empty-desc {
   }
 
   .card-actions {
-    gap: 0.6rem;
+    gap: 0.4rem;
+    flex-wrap: wrap;
   }
 
   .btn {
-    padding: 0.65rem 1rem;
-    font-size: 0.9rem;
-    min-height: 46px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.875rem;
+    min-height: 44px;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast {
+    max-width: 100%;
   }
 
   /* Footer full width on mobile */

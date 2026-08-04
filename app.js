@@ -1,6 +1,10 @@
 /* ==========================================================================
-   JORURI (জরুরি) — App Logic & Contact Management (Phase 3 Implementation)
+   JORURI (জরুরি) — App Logic & Google Contacts Integration (Phase 6)
    ========================================================================== */
+
+// Public Google Client ID (Configurable: Set your Client ID from Google Cloud Console)
+// Safe to expose on frontend (OAuth 2.0 Web Client PKCE/Token model - NO client secrets!)
+const GOOGLE_CLIENT_ID = '583701530039-ltqatn7lfdeikdi5v8f9icbos711jht3.apps.googleusercontent.com';
 
 // 1. I18N DICTIONARY FOR INTERFACE STRINGS
 const i18n = {
@@ -23,6 +27,22 @@ const i18n = {
     clearSelection: "Clear Selection",
     exportVCard: "vCard (.vcf)",
     exportCSV: "CSV (.csv)",
+    exportGoogle: "Google Contacts",
+    connectGoogle: "Connect Google Contacts",
+    googleConnected: "Connected",
+    disconnectGoogle: "Disconnect",
+    addToGoogle: "+ Google",
+    modalBulkTitle: "Add {count} contact(s) to Google Contacts?",
+    modalBulkDesc: "This will create standard contacts in your personal Google Contacts account using the selected language.",
+    modalConfirm: "Confirm",
+    modalCancel: "Cancel",
+    successSingle: "Added to Google Contacts",
+    successBulk: "{count} contact(s) added to Google Contacts!",
+    partialSuccess: "{success} contact(s) added. {fail} could not be added.",
+    authDenied: "Permission denied. You can still export contacts using CSV or vCard.",
+    authRequired: "Please connect Google Contacts first.",
+    configRequired: "Google Client ID is required. Please set GOOGLE_CLIENT_ID in app.js.",
+    disconnectNotice: "Disconnected from Google Contacts. (Existing Google Contacts were NOT deleted).",
     categories: {
       "All": "All",
       "Emergency": "Emergency",
@@ -54,6 +74,22 @@ const i18n = {
     clearSelection: "নির্বাচন বাতিল",
     exportVCard: "vCard (.vcf)",
     exportCSV: "CSV (.csv)",
+    exportGoogle: "Google Contacts",
+    connectGoogle: "Google Contacts সংযুক্ত করুন",
+    googleConnected: "সংযুক্ত রয়েছে",
+    disconnectGoogle: "বিচ্ছিন্ন করুন",
+    addToGoogle: "+ Google",
+    modalBulkTitle: "Google Contacts-এ {count}টি পরিচিতি যোগ করবেন?",
+    modalBulkDesc: "এর ফলে নির্বাচিত পরিচিতিগুলো আপনার ব্যক্তিগত Google Contacts অ্যাকাউন্টে যুক্ত হবে।",
+    modalConfirm: "নিশ্চিত করুন",
+    modalCancel: "বাতিল",
+    successSingle: "Google Contacts-এ যোগ করা হয়েছে",
+    successBulk: "{count}টি পরিচিতি Google Contacts-এ যোগ করা হয়েছে!",
+    partialSuccess: "{success}টি পরিচিতি যোগ করা হয়েছে। {fail}টি যোগ করা সম্ভব হয়নি।",
+    authDenied: "অনুমতি দেওয়া হয়নি। আপনি তবুও CSV বা vCard মাধ্যমে পরিচিতি এক্সপোর্ট করতে পারবেন।",
+    authRequired: "অনুগ্রহ করে প্রথমে Google Contacts সংযুক্ত করুন।",
+    configRequired: "Google Client ID প্রয়োজন। অনুগ্রহ করে app.js ফাইল থেকে Client ID সেট করুন।",
+    disconnectNotice: "Google Contacts সংযোগ বিচ্ছিন্ন করা হয়েছে। (পূর্বের পরিচিতিগুলো মুছে ফেলা হয়নি)।",
     categories: {
       "All": "সব",
       "Emergency": "জরুরি",
@@ -74,6 +110,12 @@ let currentCategory = 'All';
 let searchQuery = '';
 const selectedIds = new Set();
 
+// Google Auth State
+let googleAccessToken = null;
+let googleTokenClient = null;
+let googleUserConnected = false;
+let googleTokenCallbackHandler = null;
+
 const categoryKeys = ["All", "Emergency", "Healthcare", "Government", "Law & Order", "Women & Children"];
 
 // 3. INITIALIZATION
@@ -81,6 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupLanguageControls();
   setupSearchInput();
   setupSelectionBarListeners();
+  setupGoogleAuthListeners();
+  initGoogleAuth();
   applyLanguage(currentLang);
 });
 
@@ -121,6 +165,7 @@ function setupSelectionBarListeners() {
   const clearSelectionBtn = document.getElementById('clear-selection-btn');
   const btnExportVCard = document.getElementById('btn-export-vcard');
   const btnExportCSV = document.getElementById('btn-export-csv');
+  const btnExportGoogle = document.getElementById('btn-export-google');
 
   if (selectAllCheckbox) {
     selectAllCheckbox.addEventListener('change', (e) => {
@@ -145,9 +190,134 @@ function setupSelectionBarListeners() {
       exportSelectedCSV();
     });
   }
+
+  if (btnExportGoogle) {
+    btnExportGoogle.addEventListener('click', () => {
+      promptBulkGoogleExport();
+    });
+  }
 }
 
-// 7. APPLY LANGUAGE TO UI & RE-RENDER
+// 7. GOOGLE IDENTITY SERVICES AUTH SETUP
+function initGoogleAuth() {
+  if (typeof google === 'undefined' || !google.accounts || !google.accounts.oauth2) {
+    return;
+  }
+
+  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.startsWith('YOUR_GOOGLE_CLIENT_ID')) {
+    return;
+  }
+
+  try {
+    googleTokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: 'https://www.googleapis.com/auth/contacts',
+      callback: handleGoogleTokenResponse
+    });
+  } catch (err) {
+    console.warn('GIS TokenClient init warning:', err);
+  }
+}
+
+function setupGoogleAuthListeners() {
+  const btnConnect = document.getElementById('btn-connect-google');
+  const btnDisconnect = document.getElementById('btn-disconnect-google');
+
+  if (btnConnect) {
+    btnConnect.addEventListener('click', () => {
+      requestGoogleConnect();
+    });
+  }
+
+  if (btnDisconnect) {
+    btnDisconnect.addEventListener('click', () => {
+      disconnectGoogleAccount();
+    });
+  }
+}
+
+function requestGoogleConnect(onSuccessCallback = null) {
+  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.startsWith('YOUR_GOOGLE_CLIENT_ID')) {
+    showToast(i18n[currentLang].configRequired, 'warning');
+    return;
+  }
+
+  if (typeof google === 'undefined' || !google.accounts || !google.accounts.oauth2) {
+    showToast(i18n[currentLang].authRequired, 'warning');
+    return;
+  }
+
+  if (!googleTokenClient) {
+    initGoogleAuth();
+  }
+
+  if (!googleTokenClient) {
+    showToast(i18n[currentLang].configRequired, 'warning');
+    return;
+  }
+
+  googleTokenCallbackHandler = onSuccessCallback;
+  googleTokenClient.requestAccessToken({ prompt: 'consent' });
+}
+
+function handleGoogleTokenResponse(response) {
+  if (response.error) {
+    if (response.error === 'access_denied') {
+      showToast(i18n[currentLang].authDenied, 'warning');
+    } else {
+      showToast(i18n[currentLang].authRequired, 'warning');
+    }
+    return;
+  }
+
+  if (response.access_token) {
+    googleAccessToken = response.access_token;
+    googleUserConnected = true;
+    updateGoogleAuthUI();
+
+    if (googleTokenCallbackHandler) {
+      const cb = googleTokenCallbackHandler;
+      googleTokenCallbackHandler = null;
+      cb();
+    }
+  }
+}
+
+function disconnectGoogleAccount() {
+  if (googleAccessToken && typeof google !== 'undefined' && google.accounts && google.accounts.oauth2) {
+    try {
+      google.accounts.oauth2.revoke(googleAccessToken, () => {});
+    } catch (e) {}
+  }
+  googleAccessToken = null;
+  googleUserConnected = false;
+  updateGoogleAuthUI();
+  showToast(i18n[currentLang].disconnectNotice, 'info');
+}
+
+function updateGoogleAuthUI() {
+  const btnConnect = document.getElementById('btn-connect-google');
+  const connectedBadge = document.getElementById('google-connected-badge');
+  const t = i18n[currentLang];
+
+  const labelConnect = document.getElementById('label-connect-google');
+  const labelConnected = document.getElementById('label-google-connected');
+  const btnDisconnect = document.getElementById('btn-disconnect-google');
+
+  if (labelConnect) labelConnect.textContent = t.connectGoogle;
+  if (labelConnected) labelConnected.textContent = t.googleConnected;
+  if (btnDisconnect) btnDisconnect.textContent = t.disconnectGoogle;
+
+  if (googleUserConnected) {
+    if (btnConnect) btnConnect.style.display = 'none';
+    if (connectedBadge) connectedBadge.style.display = 'inline-flex';
+  } else {
+    if (btnConnect) btnConnect.style.display = 'inline-flex';
+    if (connectedBadge) connectedBadge.style.display = 'none';
+  }
+}
+
+// 8. APPLY LANGUAGE TO UI & RE-RENDER
 function applyLanguage(lang) {
   const t = i18n[lang];
 
@@ -185,11 +355,15 @@ function applyLanguage(lang) {
   const clearSelectionBtn = document.getElementById('clear-selection-btn');
   const labelExportVCard = document.getElementById('label-export-vcard');
   const labelExportCSV = document.getElementById('label-export-csv');
+  const labelExportGoogle = document.getElementById('label-export-google');
 
   if (selectAllText) selectAllText.textContent = t.selectAll;
   if (clearSelectionBtn) clearSelectionBtn.textContent = t.clearSelection;
   if (labelExportVCard) labelExportVCard.textContent = t.exportVCard;
   if (labelExportCSV) labelExportCSV.textContent = t.exportCSV;
+  if (labelExportGoogle) labelExportGoogle.textContent = t.exportGoogle;
+
+  updateGoogleAuthUI();
 
   // Render Category Filter Buttons
   renderCategoryFilters();
@@ -206,7 +380,7 @@ function applyLanguage(lang) {
   if (footerCopyright) footerCopyright.textContent = t.footerCopyright;
 }
 
-// 8. RENDER CATEGORY FILTER BUTTONS
+// 9. RENDER CATEGORY FILTER BUTTONS
 function renderCategoryFilters() {
   const container = document.getElementById('category-filters');
   if (!container) return;
@@ -226,14 +400,14 @@ function renderCategoryFilters() {
   }).join('');
 }
 
-// 9. SELECT CATEGORY ACTION
+// 10. SELECT CATEGORY ACTION
 function selectCategory(catKey) {
   currentCategory = catKey;
   renderCategoryFilters();
   renderFilteredContacts();
 }
 
-// 10. GET CURRENTLY VISIBLE CONTACTS
+// 11. GET CURRENTLY VISIBLE CONTACTS
 function getCurrentlyVisibleContacts() {
   if (typeof contactsData === 'undefined' || !Array.isArray(contactsData)) return [];
 
@@ -257,7 +431,7 @@ function getCurrentlyVisibleContacts() {
   });
 }
 
-// 11. FILTER LOGIC & CARD RENDERING
+// 12. FILTER LOGIC & CARD RENDERING
 function renderFilteredContacts() {
   const grid = document.getElementById('contact-grid');
   if (!grid) return;
@@ -320,13 +494,17 @@ function renderFilteredContacts() {
             ${t.callBtn} ${item.phone_number}
           </a>
           <button class="btn btn-copy" type="button" onclick="copyToClipboard('${item.phone_number}', this)">${t.copyBtn}</button>
+          <button class="btn btn-google-card" type="button" onclick="handleSingleGoogleAdd('${item.id}', this)" title="${t.addToGoogle}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.545,6.477,2.545,12s4.476,10,10,10c5.766,0,9.65-4.053,9.65-9.821c0-0.781-0.076-1.378-0.218-1.94H12.545z"/></svg>
+            ${t.addToGoogle}
+          </button>
         </div>
       </article>
     `;
   }).join('');
 }
 
-// 12. SELECTION HANDLERS
+// 13. SELECTION HANDLERS
 function toggleSelectContact(id, isChecked) {
   if (isChecked) {
     selectedIds.add(id);
@@ -334,7 +512,6 @@ function toggleSelectContact(id, isChecked) {
     selectedIds.delete(id);
   }
 
-  // Update card styling locally
   const cardElement = document.querySelector(`.contact-card[data-id="${id}"]`);
   if (cardElement) {
     cardElement.classList.toggle('selected', isChecked);
@@ -362,14 +539,13 @@ function clearSelection() {
   renderFilteredContacts();
 }
 
-// 13. UPDATE SELECTION BAR UI (Compact Toolbar Sync)
+// 14. UPDATE SELECTION BAR UI
 function updateSelectionBarUI(visibleItems = []) {
   const t = i18n[currentLang];
   const selectAllCheckbox = document.getElementById('select-all-checkbox');
   const countBadge = document.getElementById('selected-count-badge');
   const selectionActions = document.getElementById('selection-actions');
 
-  // Sync Select All checkbox state for currently visible items
   if (selectAllCheckbox) {
     const allVisibleSelected = visibleItems.length > 0 && visibleItems.every(item => selectedIds.has(item.id));
     selectAllCheckbox.checked = allVisibleSelected;
@@ -387,14 +563,180 @@ function updateSelectionBarUI(visibleItems = []) {
   }
 }
 
-// 14. BANGLA NUMERAL FORMATTER
+// 15. BANGLA NUMERAL FORMATTER
 function formatCount(num, lang) {
   if (lang !== 'bn') return num.toString();
   const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
   return num.toString().replace(/\d/g, d => bnDigits[d]);
 }
 
-// 15. MINIMAL vCARD EXPORT (Language Specific: Name + Phone Only)
+// 16. SINGLE GOOGLE CONTACT ADDITION
+function handleSingleGoogleAdd(id, btnElement) {
+  const item = contactsData.find(c => c.id === id);
+  if (!item) return;
+
+  if (!googleUserConnected || !googleAccessToken) {
+    requestGoogleConnect(() => {
+      executeSingleGoogleAdd(item, btnElement);
+    });
+    return;
+  }
+
+  executeSingleGoogleAdd(item, btnElement);
+}
+
+async function executeSingleGoogleAdd(item, btnElement) {
+  const t = i18n[currentLang];
+  const name = currentLang === 'bn' ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
+
+  try {
+    const response = await fetch('https://people.googleapis.com/v1/people:createContact', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${googleAccessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        names: [{ givenName: name }],
+        phoneNumbers: [{ value: item.phone_number, type: 'mobile' }]
+      })
+    });
+
+    if (response.ok) {
+      showToast(t.successSingle, 'success');
+      if (btnElement) {
+        btnElement.textContent = '✓';
+        btnElement.classList.add('added');
+      }
+    } else {
+      const errData = await response.json();
+      if (response.status === 401) {
+        googleAccessToken = null;
+        googleUserConnected = false;
+        updateGoogleAuthUI();
+        showToast(t.authRequired, 'warning');
+      } else {
+        showToast(t.authRequired, 'warning');
+      }
+    }
+  } catch (err) {
+    showToast(t.authRequired, 'warning');
+  }
+}
+
+// 17. BULK GOOGLE CONTACTS ADDITION WITH MODAL CONFIRMATION
+function promptBulkGoogleExport() {
+  const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
+  if (selectedItems.length === 0) return;
+
+  if (!googleUserConnected || !googleAccessToken) {
+    requestGoogleConnect(() => {
+      showBulkGoogleModal(selectedItems);
+    });
+    return;
+  }
+
+  showBulkGoogleModal(selectedItems);
+}
+
+function showBulkGoogleModal(selectedItems) {
+  const t = i18n[currentLang];
+  const modal = document.getElementById('google-modal');
+  const title = document.getElementById('modal-title');
+  const desc = document.getElementById('modal-desc');
+  const btnConfirm = document.getElementById('modal-btn-confirm');
+  const btnCancel = document.getElementById('modal-btn-cancel');
+
+  if (!modal) return;
+
+  if (title) title.textContent = t.modalBulkTitle.replace('{count}', formatCount(selectedItems.length, currentLang));
+  if (desc) desc.textContent = t.modalBulkDesc;
+  if (btnConfirm) btnConfirm.textContent = t.modalConfirm;
+  if (btnCancel) btnCancel.textContent = t.modalCancel;
+
+  modal.style.display = 'flex';
+
+  const cleanup = () => {
+    modal.style.display = 'none';
+    btnConfirm.onclick = null;
+    btnCancel.onclick = null;
+  };
+
+  btnCancel.onclick = () => {
+    cleanup();
+  };
+
+  btnConfirm.onclick = async () => {
+    cleanup();
+    await executeBulkGoogleAdd(selectedItems);
+  };
+}
+
+async function executeBulkGoogleAdd(selectedItems) {
+  const t = i18n[currentLang];
+  let successCount = 0;
+  let failCount = 0;
+
+  for (const item of selectedItems) {
+    const name = currentLang === 'bn' ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
+    try {
+      const response = await fetch('https://people.googleapis.com/v1/people:createContact', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${googleAccessToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          names: [{ givenName: name }],
+          phoneNumbers: [{ value: item.phone_number, type: 'mobile' }]
+        })
+      });
+
+      if (response.ok) {
+        successCount++;
+      } else {
+        failCount++;
+      }
+    } catch (err) {
+      failCount++;
+    }
+  }
+
+  if (failCount === 0) {
+    showToast(t.successBulk.replace('{count}', formatCount(successCount, currentLang)), 'success');
+  } else if (successCount > 0) {
+    showToast(t.partialSuccess.replace('{success}', formatCount(successCount, currentLang)).replace('{fail}', formatCount(failCount, currentLang)), 'warning');
+  } else {
+    showToast(t.authRequired, 'warning');
+  }
+}
+
+// 18. TOAST FEEDBACK NOTIFICATIONS
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 10);
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, 3500);
+}
+
+// 19. MINIMAL vCARD EXPORT (.vcf)
 function exportSelectedVCard() {
   const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
   if (selectedItems.length === 0) return;
@@ -403,7 +745,6 @@ function exportSelectedVCard() {
   let vcard = '';
 
   selectedItems.forEach(item => {
-    // Active language service name only
     const name = isBn ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
     vcard += 'BEGIN:VCARD\r\n';
     vcard += 'VERSION:3.0\r\n';
@@ -416,7 +757,7 @@ function exportSelectedVCard() {
   downloadFile(vcard, fileName, 'text/vcard;charset=utf-8');
 }
 
-// 16. MINIMAL CSV EXPORT (Language Specific: Name + Phone Only with UTF-8 BOM)
+// 20. MINIMAL CSV EXPORT (.csv) WITH UTF-8 BOM
 function exportSelectedCSV() {
   const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
   if (selectedItems.length === 0) return;
@@ -425,12 +766,10 @@ function exportSelectedCSV() {
   const nameHeader = isBn ? 'নাম' : 'Name';
   const phoneHeader = isBn ? 'ফোন নম্বর' : 'Phone';
 
-  // UTF-8 Byte Order Mark (BOM) to ensure Excel displays Bangla text correctly
   let csv = '\uFEFF';
   csv += `"${nameHeader}","${phoneHeader}"\r\n`;
 
   selectedItems.forEach(item => {
-    // Active language service name only
     const name = isBn ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
     const cleanName = name.replace(/"/g, '""');
     const phone = item.phone_number.replace(/"/g, '""');
@@ -454,7 +793,7 @@ function downloadFile(content, fileName, mimeType) {
   URL.revokeObjectURL(url);
 }
 
-// 17. RESET FILTERS ACTION
+// 21. RESET FILTERS ACTION
 function resetFilters() {
   currentCategory = 'All';
   searchQuery = '';
@@ -464,7 +803,7 @@ function resetFilters() {
   renderFilteredContacts();
 }
 
-// 18. COPY TO CLIPBOARD HELPER
+// 22. COPY TO CLIPBOARD HELPER
 function copyToClipboard(text, btnElement) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => showCopyFeedback(btnElement)).catch(() => fallbackCopy(text, btnElement));
