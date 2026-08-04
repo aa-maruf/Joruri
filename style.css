@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JORURI (জরুরি) — Phase 1 CSS Design System & Responsive Layout
+   JORURI (জরুরি) — Phase 1 & 2 CSS Design System & Responsive Layout
    Ref: UI-DESIGN-SPEC.md
    ========================================================================== */
 
@@ -43,6 +43,10 @@ html, body {
   font-family: var(--font-en);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+html[lang="bn"] body {
+  font-family: var(--font-bn), var(--font-en);
 }
 
 .container {
@@ -162,12 +166,15 @@ html, body {
   font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 0.1rem 0.3rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  transition: all 0.15s ease;
 }
 
 .lang-btn.active {
   color: var(--primary-green);
   font-weight: 700;
+  background-color: #E2E8F0;
 }
 
 .lang-divider {
@@ -199,10 +206,18 @@ html, body {
   overflow-wrap: break-word;
 }
 
+html[lang="bn"] .hero-title {
+  font-family: var(--font-bn);
+}
+
 .hero-description {
   font-size: 1.05rem;
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+html[lang="bn"] .hero-description {
+  font-family: var(--font-bn);
 }
 
 /* 5. SEARCH BAR */
@@ -241,6 +256,10 @@ html, body {
   text-overflow: ellipsis;
 }
 
+html[lang="bn"] .search-input {
+  font-family: var(--font-bn);
+}
+
 .search-input:disabled {
   background-color: #FFFFFF;
   cursor: not-allowed;
@@ -273,6 +292,10 @@ html, body {
   transition: all 0.15s ease;
   flex-shrink: 0;
   white-space: nowrap;
+}
+
+html[lang="bn"] .category-btn {
+  font-family: var(--font-bn);
 }
 
 .category-btn:hover {
@@ -326,26 +349,27 @@ html, body {
   border-radius: var(--radius-sm);
 }
 
+html[lang="bn"] .category-badge {
+  font-family: var(--font-bn);
+}
+
 .category-badge.badge-emergency {
   background-color: #FEF2F2;
   color: var(--emergency-red);
   border: 1px solid #FCA5A5;
 }
 
-.service-title-en {
+.service-title {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.2rem;
-  line-height: 1.3;
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
 }
 
-.service-title-bn {
+html[lang="bn"] .service-title {
   font-family: var(--font-bn);
-  font-size: 1.05rem;
-  font-weight: 600;
   color: var(--primary-green);
-  margin-bottom: 0.75rem;
 }
 
 .service-description {
@@ -356,6 +380,10 @@ html, body {
   min-height: 2.6rem;
 }
 
+html[lang="bn"] .service-description {
+  font-family: var(--font-bn);
+}
+
 .phone-number-display {
   font-size: 2.25rem;
   font-weight: 800;
@@ -363,6 +391,7 @@ html, body {
   letter-spacing: -0.03em;
   margin-bottom: 1.25rem;
   font-variant-numeric: tabular-nums;
+  font-family: var(--font-en);
 }
 
 .card-actions {
@@ -385,6 +414,10 @@ html, body {
   cursor: pointer;
   border: none;
   min-height: 44px;
+}
+
+html[lang="bn"] .btn {
+  font-family: var(--font-bn);
 }
 
 /* Call Button (Primary Action) */
@@ -412,10 +445,17 @@ html, body {
   background-color: #F1F5F9;
   color: var(--text-primary);
   border: 1px solid var(--border-color);
+  transition: all 0.15s ease;
 }
 
 .btn-copy:hover {
   background-color: #E2E8F0;
+}
+
+.btn-copy.copied {
+  background-color: #DCFCE7;
+  color: #166534;
+  border-color: #86EFAC;
 }
 
 /* 8. FOOTER */
@@ -581,12 +621,8 @@ html, body {
     padding: 1.25rem;
   }
 
-  .service-title-en {
+  .service-title {
     font-size: 1.1rem;
-  }
-
-  .service-title-bn {
-    font-size: 1rem;
   }
 
   .service-description {

@@ -20,7 +20,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
-        <img src="./logo-Joruri(short).svg" alt="Joruri Icon" class="brand-logo">
+        <img src="./logo-Joruri(short).svg" alt="Joruri Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-en">Joruri</span>
           <span class="brand-bn">জরুরি</span>
@@ -28,15 +28,15 @@
       </div>
 
       <nav class="main-nav" aria-label="Main Navigation">
-        <a href="#" class="nav-tab active" aria-current="page">Phone Numbers</a>
-        <span class="nav-tab disabled">Websites <span class="badge-soon">Soon</span></span>
-        <span class="nav-tab disabled">Apps <span class="badge-soon">Soon</span></span>
+        <a href="#" id="nav-phone" class="nav-tab active" aria-current="page">Phone Numbers</a>
+        <span id="nav-websites" class="nav-tab disabled">Websites <span class="badge-soon">Soon</span></span>
+        <span id="nav-apps" class="nav-tab disabled">Apps <span class="badge-soon">Soon</span></span>
       </nav>
 
       <div class="lang-switch">
-        <button class="lang-btn active" aria-label="English Language">EN</button>
+        <button id="lang-en" class="lang-btn active" aria-label="English Language" type="button">EN</button>
         <span class="lang-divider">|</span>
-        <button class="lang-btn" aria-label="Bangla Language">বাংলা</button>
+        <button id="lang-bn" class="lang-btn" aria-label="Bangla Language" type="button">বাংলা</button>
       </div>
     </div>
   </header>
@@ -46,8 +46,8 @@
 
     <!-- 2. HERO / PAGE INTRODUCTION -->
     <section class="hero-section">
-      <h1 class="hero-title">Important Public-Service Contacts in Bangladesh</h1>
-      <p class="hero-description">
+      <h1 id="hero-title" class="hero-title">Important Public-Service Contacts in Bangladesh</h1>
+      <p id="hero-desc" class="hero-description">
         Quickly find, copy, and dial emergency hotlines, healthcare support, and official government helplines.
       </p>
     </section>
@@ -61,6 +61,7 @@
         </svg>
         <input 
           type="text" 
+          id="search-input"
           class="search-input" 
           placeholder="Search by service name, topic, or phone number..."
           aria-label="Search public service contacts"
@@ -71,92 +72,15 @@
 
     <!-- 4. CATEGORY FILTERS -->
     <section class="categories-section">
-      <div class="category-filters" role="group" aria-label="Category Filters">
-        <button class="category-btn active">All</button>
-        <button class="category-btn">Emergency</button>
-        <button class="category-btn">Healthcare</button>
-        <button class="category-btn">Government</button>
-        <button class="category-btn">Law & Order</button>
-        <button class="category-btn">Women & Children</button>
+      <div id="category-filters" class="category-filters" role="group" aria-label="Category Filters">
+        <!-- Rendered dynamically by app.js based on current language -->
       </div>
     </section>
 
     <!-- 5. CONTACT CARDS GRID -->
     <section class="contacts-section">
-      <div class="contact-grid">
-
-        <!-- Sample Card 1: Emergency -->
-        <article class="contact-card emergency-card">
-          <div class="card-header">
-            <span class="category-badge badge-emergency">Emergency</span>
-          </div>
-          <div class="card-body">
-            <h2 class="service-title-en">National Emergency Service</h2>
-            <h3 class="service-title-bn">জাতীয় জরুরি সেবা</h3>
-            <p class="service-description">
-              Police, fire, and ambulance emergency assistance available 24/7 across Bangladesh.
-            </p>
-            <div class="phone-number-display">999</div>
-          </div>
-          <div class="card-actions">
-            <a href="tel:999" class="btn btn-call btn-call-emergency">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              Call 999
-            </a>
-            <button class="btn btn-copy" type="button">Copy</button>
-          </div>
-        </article>
-
-        <!-- Sample Card 2: Government -->
-        <article class="contact-card">
-          <div class="card-header">
-            <span class="category-badge">Government</span>
-          </div>
-          <div class="card-body">
-            <h2 class="service-title-en">National Call Center & Citizen Support</h2>
-            <h3 class="service-title-bn">জাতীয় তথ্য ও সেবা কেন্দ্র</h3>
-            <p class="service-description">
-              Information on government services, social safety nets, and official helpline guidance.
-            </p>
-            <div class="phone-number-display">333</div>
-          </div>
-          <div class="card-actions">
-            <a href="tel:333" class="btn btn-call">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              Call 333
-            </a>
-            <button class="btn btn-copy" type="button">Copy</button>
-          </div>
-        </article>
-
-        <!-- Sample Card 3: Healthcare -->
-        <article class="contact-card">
-          <div class="card-header">
-            <span class="category-badge">Healthcare</span>
-          </div>
-          <div class="card-body">
-            <h2 class="service-title-en">Shasthya Batayan (Health Line)</h2>
-            <h3 class="service-title-bn">স্বাস্থ্য বাতায়ন</h3>
-            <p class="service-description">
-              24/7 medical advice, professional doctor consultation, and health emergency guidance.
-            </p>
-            <div class="phone-number-display">16263</div>
-          </div>
-          <div class="card-actions">
-            <a href="tel:16263" class="btn btn-call">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              Call 16263
-            </a>
-            <button class="btn btn-copy" type="button">Copy</button>
-          </div>
-        </article>
-
+      <div id="contact-grid" class="contact-grid">
+        <!-- All 14 contact cards are rendered dynamically by app.js from contacts.js -->
       </div>
     </section>
 
@@ -165,17 +89,23 @@
   <!-- 6. FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div class="footer-brand">
+      <div id="footer-brand" class="footer-brand">
         <strong>Joruri (জরুরি)</strong> — Public-Service Contact Directory
       </div>
-      <p class="footer-disclaimer">
+      <p id="footer-disclaimer" class="footer-disclaimer">
         Disclaimer: Joruri is an independent public-service directory designed for citizen guidance. It is not an official government platform.
       </p>
-      <p class="footer-copyright">
+      <p id="footer-copyright" class="footer-copyright">
         © 2026 Joruri. Information first.
       </p>
     </div>
   </footer>
+
+  <!-- DATA & APP LOGIC -->
+  <!-- Load verified dataset first -->
+  <script src="contacts.js"></script>
+  <!-- Load app logic second -->
+  <script src="app.js"></script>
 
 </body>
 </html>
