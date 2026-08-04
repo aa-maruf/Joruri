@@ -254,15 +254,15 @@ html[lang="bn"] .hero-description {
   outline: none;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   text-overflow: ellipsis;
+  transition: border-color 0.15s ease;
+}
+
+.search-input:focus {
+  border-color: var(--primary-green);
 }
 
 html[lang="bn"] .search-input {
   font-family: var(--font-bn);
-}
-
-.search-input:disabled {
-  background-color: #FFFFFF;
-  cursor: not-allowed;
 }
 
 /* 6. CATEGORY FILTERS */
@@ -456,6 +456,36 @@ html[lang="bn"] .btn {
   background-color: #DCFCE7;
   color: #166534;
   border-color: #86EFAC;
+}
+
+/* Empty State */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background-color: var(--card-bg);
+  border: 1.5px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.empty-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+html[lang="bn"] .empty-title,
+html[lang="bn"] .empty-desc {
+  font-family: var(--font-bn);
+}
+
+.empty-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
 }
 
 /* 8. FOOTER */

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JORURI (জরুরি) — App Logic & Language Switching (Phase 2 Data Integration)
+   JORURI (জরুরি) — App Logic & Interactive Features (Phase 2 Implementation)
    ========================================================================== */
 
 // 1. I18N DICTIONARY FOR INTERFACE STRINGS
@@ -15,6 +15,9 @@ const i18n = {
     callBtn: "Call",
     copyBtn: "Copy",
     copiedMsg: "Copied!",
+    emptyTitle: "No Contacts Found",
+    emptyDesc: "No contacts match your current search query or selected category.",
+    resetFiltersBtn: "Clear Search & Filters",
     categories: {
       "All": "All",
       "Emergency": "Emergency",
@@ -38,6 +41,9 @@ const i18n = {
     callBtn: "কল করুন",
     copyBtn: "কপি",
     copiedMsg: "কপি হয়েছে!",
+    emptyTitle: "কোনো নম্বর পাওয়া যায়নি",
+    emptyDesc: "আপনার অনুসন্ধান বা ফিল্টারের সাথে কোনো সরকারি বা জরুরি সেবা নম্বর মিলছে না।",
+    resetFiltersBtn: "অনুসন্ধান রিসেট করুন",
     categories: {
       "All": "সব",
       "Emergency": "জরুরি",
@@ -54,13 +60,15 @@ const i18n = {
 
 // 2. STATE MANAGEMENT
 let currentLang = localStorage.getItem('joruri_lang') || 'en';
+let currentCategory = 'All';
+let searchQuery = '';
 
-// Category filter list (static for UI layout in Phase 2)
-const categoryList = ["All", "Emergency", "Healthcare", "Government", "Law & Order", "Women & Children"];
+const categoryKeys = ["All", "Emergency", "Healthcare", "Government", "Law & Order", "Women & Children"];
 
-// 3. CORE INITIALIZATION
+// 3. INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
   setupLanguageControls();
+  setupSearchInput();
   applyLanguage(currentLang);
 });
 
@@ -84,14 +92,25 @@ function switchLanguage(lang) {
   applyLanguage(lang);
 }
 
-// 5. APPLY LANGUAGE TO UI & RE-RENDER CARDS
+// 5. SEARCH INPUT LISTENER
+function setupSearchInput() {
+  const searchInput = document.getElementById('search-input');
+  if (!searchInput) return;
+
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    renderFilteredContacts();
+  });
+}
+
+// 6. APPLY LANGUAGE TO UI & RE-RENDER
 function applyLanguage(lang) {
   const t = i18n[lang];
 
   // Update HTML lang attribute
   document.documentElement.lang = lang;
 
-  // Update Language Button Active States
+  // Update Language Buttons Active State
   const btnEn = document.getElementById('lang-en');
   const btnBn = document.getElementById('lang-bn');
   if (btnEn && btnBn) {
@@ -117,11 +136,11 @@ function applyLanguage(lang) {
   const searchInput = document.getElementById('search-input');
   if (searchInput) searchInput.placeholder = t.searchPlaceholder;
 
-  // Render Category Filter Buttons with Translated Text
-  renderCategoryFilters(lang);
+  // Render Category Filter Buttons
+  renderCategoryFilters();
 
-  // Render All 14 Contact Cards
-  renderContactCards(lang);
+  // Render Contacts Grid
+  renderFilteredContacts();
 
   // Update Footer Text
   const footerBrand = document.getElementById('footer-brand');
@@ -132,39 +151,87 @@ function applyLanguage(lang) {
   if (footerCopyright) footerCopyright.textContent = t.footerCopyright;
 }
 
-// 6. RENDER CATEGORY FILTERS
-function renderCategoryFilters(lang) {
+// 7. RENDER CATEGORY FILTER BUTTONS
+function renderCategoryFilters() {
   const container = document.getElementById('category-filters');
   if (!container) return;
 
-  const tCategories = i18n[lang].categories;
+  const tCategories = i18n[currentLang].categories;
 
-  container.innerHTML = categoryList.map((catKey, index) => {
-    const isFirst = index === 0;
+  container.innerHTML = categoryKeys.map(catKey => {
+    const isActive = catKey === currentCategory;
     const label = tCategories[catKey] || catKey;
-    return `<button class="category-btn ${isFirst ? 'active' : ''}" type="button">${label}</button>`;
+    return `
+      <button 
+        class="category-btn ${isActive ? 'active' : ''}" 
+        type="button" 
+        onclick="selectCategory('${catKey}')"
+      >${label}</button>
+    `;
   }).join('');
 }
 
-// 7. RENDER CONTACT CARDS
-function renderContactCards(lang) {
+// 8. SELECT CATEGORY ACTION
+function selectCategory(catKey) {
+  currentCategory = catKey;
+  renderCategoryFilters();
+  renderFilteredContacts();
+}
+
+// 9. FILTER LOGIC & CARD RENDERING
+function renderFilteredContacts() {
   const grid = document.getElementById('contact-grid');
   if (!grid) return;
 
-  // Safety check: ensure contactsData is loaded from contacts.js
   if (typeof contactsData === 'undefined' || !Array.isArray(contactsData)) {
     grid.innerHTML = '<p class="error-msg">Error: Contact dataset could not be loaded.</p>';
     return;
   }
 
-  const t = i18n[lang];
+  const t = i18n[currentLang];
 
-  grid.innerHTML = contactsData.map(item => {
+  // Filter contacts by active category and search query
+  const filtered = contactsData.filter(item => {
+    // Category match
+    const matchCategory = (currentCategory === 'All') || (item.category === currentCategory);
+
+    // Search query match
+    let matchSearch = true;
+    if (searchQuery) {
+      const q = searchQuery;
+      matchSearch = (
+        (item.service_name_en && item.service_name_en.toLowerCase().includes(q)) ||
+        (item.service_name_bn && item.service_name_bn.toLowerCase().includes(q)) ||
+        (item.phone_number && item.phone_number.includes(q)) ||
+        (item.description_en && item.description_en.toLowerCase().includes(q)) ||
+        (item.description_bn && item.description_bn.toLowerCase().includes(q)) ||
+        (item.category && item.category.toLowerCase().includes(q)) ||
+        (item.organization_en && item.organization_en.toLowerCase().includes(q)) ||
+        (item.organization_bn && item.organization_bn.toLowerCase().includes(q))
+      );
+    }
+
+    return matchCategory && matchSearch;
+  });
+
+  // Empty State handling
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <h3 class="empty-title">${t.emptyTitle}</h3>
+        <p class="empty-desc">${t.emptyDesc}</p>
+        <button class="btn btn-copy" type="button" onclick="resetFilters()">${t.resetFiltersBtn}</button>
+      </div>
+    `;
+    return;
+  }
+
+  // Render cards
+  grid.innerHTML = filtered.map(item => {
     // Select language-specific title and description
-    const title = lang === 'bn' ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
-    const description = lang === 'bn' ? (item.description_bn || item.description_en) : (item.description_en || item.description_bn);
+    const title = currentLang === 'bn' ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
+    const description = currentLang === 'bn' ? (item.description_bn || item.description_en) : (item.description_en || item.description_bn);
     
-    // Category label translation
     const categoryLabel = t.categories[item.category] || item.category;
     const isEmergency = item.category === 'Emergency';
 
@@ -192,7 +259,17 @@ function renderContactCards(lang) {
   }).join('');
 }
 
-// 8. COPY TO CLIPBOARD HELPER (User experience feedback)
+// 10. RESET FILTERS ACTION
+function resetFilters() {
+  currentCategory = 'All';
+  searchQuery = '';
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) searchInput.value = '';
+  renderCategoryFilters();
+  renderFilteredContacts();
+}
+
+// 11. COPY TO CLIPBOARD HELPER
 function copyToClipboard(text, btnElement) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => showCopyFeedback(btnElement)).catch(() => fallbackCopy(text, btnElement));
