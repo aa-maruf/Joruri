@@ -30,10 +30,8 @@
       <nav class="main-nav" aria-label="Main Navigation">
         <a href="#home" id="nav-home" class="nav-tab active" aria-current="page">Home</a>
         <a href="#phone" id="nav-phone" class="nav-tab">Emergency Services</a>
-        <a href="#about" id="nav-about" class="nav-tab">About</a>
+        <a href="#about" id="nav-about" class="nav-tab">About Us</a>
         <a href="#contact" id="nav-contact" class="nav-tab">Contact</a>
-        <span id="nav-websites" class="nav-tab disabled">Websites <span class="badge-soon">Soon</span></span>
-        <span id="nav-apps" class="nav-tab disabled">Apps <span class="badge-soon">Soon</span></span>
       </nav>
 
       <div class="lang-switch">
@@ -529,15 +527,42 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div id="footer-brand" class="footer-brand">
-        <strong>Joruri (জরুরি)</strong> — Public-Service Contact Directory
+      <div class="footer-top">
+        <div class="footer-brand-col">
+          <a href="#home" id="footer-brand-link" class="footer-brand" aria-label="Joruri Home">
+            <img src="./logo-Joruri(short).svg" alt="Joruri Logo" class="footer-logo">
+            <div class="footer-brand-text">
+              <span class="footer-brand-en">Joruri</span>
+              <span class="footer-brand-bn">জরুরি</span>
+            </div>
+          </a>
+          <div id="footer-brand-sub" class="footer-brand-sub">Bangladesh Public Service Directory</div>
+          <p id="footer-desc" class="footer-desc">
+            Joruri is an independent public-service information directory that helps people quickly find important service numbers in Bangladesh.
+          </p>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 id="footer-nav-title" class="footer-links-title">Quick Links</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#home" id="footer-link-home" class="footer-nav-link">Home</a></li>
+            <li><a href="#phone" id="footer-link-phone" class="footer-nav-link">Emergency Services</a></li>
+            <li><a href="#about" id="footer-link-about" class="footer-nav-link">About Us</a></li>
+            <li><a href="#contact" id="footer-link-contact" class="footer-nav-link">Contact</a></li>
+          </ul>
+        </div>
       </div>
-      <p id="footer-disclaimer" class="footer-disclaimer">
-        Disclaimer: Joruri is an independent public-service directory designed for citizen guidance. It is not an official government platform.
-      </p>
-      <p id="footer-copyright" class="footer-copyright">
-        © 2026 Joruri. Information first.
-      </p>
+
+      <div class="footer-disclaimer-box">
+        <p id="footer-disclaimer" class="footer-disclaimer">
+          Joruri is an independent public-service information hub and is not an official government platform.
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <span id="footer-copyright" class="footer-copyright">© 2026 Joruri.</span>
+        <span id="footer-convenience" class="footer-convenience">Information is provided for public convenience.</span>
+      </div>
     </div>
   </footer>
 

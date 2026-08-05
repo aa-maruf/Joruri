@@ -8,11 +8,16 @@ const i18n = {
     // Header & Navigation
     navHome: "Home",
     navPhone: "Emergency Services",
-    navAbout: "About",
+    navAbout: "About Us",
     navContact: "Contact",
-    navWebsites: "Websites",
-    navApps: "Apps",
-    soonBadge: "Soon",
+
+    // Footer
+    footerBrandSub: "Bangladesh Public Service Directory",
+    footerDesc: "Joruri is an independent public-service information directory that helps people quickly find important service numbers in Bangladesh.",
+    footerNavTitle: "Quick Links",
+    footerDisclaimer: "Joruri is an independent public-service information hub and is not an official government platform.",
+    footerCopyright: "© 2026 Joruri.",
+    footerConvenience: "Information is provided for public convenience.",
 
     // Home Page Hero & Workflow
     homeHeroTitle: "Important Public-Service Information, All in One Place",
@@ -156,12 +161,17 @@ const i18n = {
   bn: {
     // Header & Navigation
     navHome: "হোম",
-    navPhone: "জরুরির সেবা",
-    navAbout: "জরুরি সম্পর্কে",
+    navPhone: "জরুরি সেবা",
+    navAbout: "আমাদের সম্পর্কে",
     navContact: "যোগাযোগ",
-    navWebsites: "ওয়েবসাইট",
-    navApps: "অ্যাপস",
-    soonBadge: "শীঘ্রই",
+
+    // Footer
+    footerBrandSub: "বাংলাদেশ জনসেবামূলক ফোন ডিরেক্টরি",
+    footerDesc: "জরুরি একটি স্বাধীন জনসেবামূলক তথ্য ডিরেক্টরি যা সাধারণ মানুষকে বাংলাদেশে প্রয়োজনীয় সেবার নম্বর সহজে খুঁজে পেতে সহায়তা করে।",
+    footerNavTitle: "দ্রুত লিঙ্ক",
+    footerDisclaimer: "জরুরি একটি স্বাধীন জনসেবামূলক তথ্য কেন্দ্র এবং এটি কোনো সরকারি প্রাতিষ্ঠানিক প্ল্যাটফর্ম নয়।",
+    footerCopyright: "© ২০২৬ জরুরি।",
+    footerConvenience: "জনগণের সুবিধার্থে তথ্য প্রদান করা হলো।",
 
     // Home Page Hero & Workflow
     homeHeroTitle: "গুরুত্বপূর্ণ সরকারি ও জরুরি তথ্য, এক জায়গায়",
@@ -398,6 +408,43 @@ function setupNavigationControls() {
     });
   }
 
+  // Footer Link Event Listeners
+  const footerBrandLink = document.getElementById('footer-brand-link');
+  const footerLinkHome = document.getElementById('footer-link-home');
+  const footerLinkPhone = document.getElementById('footer-link-phone');
+  const footerLinkAbout = document.getElementById('footer-link-about');
+  const footerLinkContact = document.getElementById('footer-link-contact');
+
+  [footerBrandLink, footerLinkHome].forEach(link => {
+    if (link) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchView('home');
+      });
+    }
+  });
+
+  if (footerLinkPhone) {
+    footerLinkPhone.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('phone');
+    });
+  }
+
+  if (footerLinkAbout) {
+    footerLinkAbout.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('about');
+    });
+  }
+
+  if (footerLinkContact) {
+    footerLinkContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('contact');
+    });
+  }
+
   if (btnExplore) {
     btnExplore.addEventListener('click', () => {
       switchView('phone');
@@ -539,15 +586,11 @@ function applyLanguage(lang) {
   const navPhone = document.getElementById('nav-phone');
   const navAbout = document.getElementById('nav-about');
   const navContact = document.getElementById('nav-contact');
-  const navWebsites = document.getElementById('nav-websites');
-  const navApps = document.getElementById('nav-apps');
 
   if (navHome) navHome.textContent = t.navHome;
   if (navPhone) navPhone.textContent = t.navPhone;
   if (navAbout) navAbout.textContent = t.navAbout;
   if (navContact) navContact.textContent = t.navContact;
-  if (navWebsites) navWebsites.innerHTML = `${t.navWebsites} <span class="badge-soon">${t.soonBadge}</span>`;
-  if (navApps) navApps.innerHTML = `${t.navApps} <span class="badge-soon">${t.soonBadge}</span>`;
 
   // --- A. HOME PAGE TEXT UPDATES ---
   const homeHeroTitle = document.getElementById('home-hero-title');
@@ -783,13 +826,28 @@ function applyLanguage(lang) {
   const contactDisclaimerText = document.getElementById('contact-disclaimer-text');
   if (contactDisclaimerText) contactDisclaimerText.textContent = t.contactDisclaimerText;
 
-  // Footer Text
-  const footerBrand = document.getElementById('footer-brand');
+  // Footer Text Updates
+  const footerBrandSub = document.getElementById('footer-brand-sub');
+  const footerDesc = document.getElementById('footer-desc');
+  const footerNavTitle = document.getElementById('footer-nav-title');
+  const footerLinkHome = document.getElementById('footer-link-home');
+  const footerLinkPhone = document.getElementById('footer-link-phone');
+  const footerLinkAbout = document.getElementById('footer-link-about');
+  const footerLinkContact = document.getElementById('footer-link-contact');
   const footerDisclaimer = document.getElementById('footer-disclaimer');
   const footerCopyright = document.getElementById('footer-copyright');
-  if (footerBrand) footerBrand.textContent = t.footerBrand;
+  const footerConvenience = document.getElementById('footer-convenience');
+
+  if (footerBrandSub) footerBrandSub.textContent = t.footerBrandSub;
+  if (footerDesc) footerDesc.textContent = t.footerDesc;
+  if (footerNavTitle) footerNavTitle.textContent = t.footerNavTitle;
+  if (footerLinkHome) footerLinkHome.textContent = t.navHome;
+  if (footerLinkPhone) footerLinkPhone.textContent = t.navPhone;
+  if (footerLinkAbout) footerLinkAbout.textContent = t.navAbout;
+  if (footerLinkContact) footerLinkContact.textContent = t.navContact;
   if (footerDisclaimer) footerDisclaimer.textContent = t.footerDisclaimer;
   if (footerCopyright) footerCopyright.textContent = t.footerCopyright;
+  if (footerConvenience) footerConvenience.textContent = t.footerConvenience;
 }
 
 // 9. RENDER TOP EMERGENCY NUMBERS FOR HOME PAGE
