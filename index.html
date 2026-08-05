@@ -30,6 +30,7 @@
       <nav class="main-nav" aria-label="Main Navigation">
         <a href="#home" id="nav-home" class="nav-tab active" aria-current="page">Home</a>
         <a href="#phone" id="nav-phone" class="nav-tab">Emergency Services</a>
+        <a href="#about" id="nav-about" class="nav-tab">About</a>
         <span id="nav-websites" class="nav-tab disabled">Websites <span class="badge-soon">Soon</span></span>
         <span id="nav-apps" class="nav-tab disabled">Apps <span class="badge-soon">Soon</span></span>
       </nav>
@@ -247,6 +248,145 @@
       <section class="contacts-section">
         <div id="contact-grid" class="contact-grid">
           <!-- All 14 contact cards are rendered dynamically by app.js from contacts.js -->
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ===================================================================
+         C. ABOUT PAGE VIEW (#view-about)
+         =================================================================== -->
+    <div id="view-about" class="page-view" style="display: none;">
+      
+      <!-- HERO / INTRODUCTION -->
+      <section class="about-hero-section">
+        <span id="about-hero-badge" class="about-hero-badge">ABOUT JORURI</span>
+        <h1 id="about-hero-title" class="about-hero-title">Making Public-Service Information Easier to Find</h1>
+        <p id="about-hero-desc" class="about-hero-desc">
+          Joruri (জরুরি) is a public-service contact directory designed to help people in Bangladesh quickly find and access important public-service phone numbers.
+        </p>
+      </section>
+
+      <!-- WHY JORURI SECTION -->
+      <section class="about-section">
+        <div class="about-card-box">
+          <h2 id="about-why-title" class="about-section-title">Why Joruri?</h2>
+          <p id="about-why-p1" class="about-text">
+            Bangladesh has many important public and government services, but people may not always know which number to call when they need assistance.
+          </p>
+          <p id="about-why-p2" class="about-text">
+            While almost everyone is familiar with the national emergency number 999, fewer people know about specialized public-service hotlines such as child helplines, healthcare support, or legal assistance. When citizens are unaware of these dedicated services, they often rely solely on 999 even when another specialized hotline would be more direct and appropriate.
+          </p>
+          <p id="about-why-p3" class="about-text">
+            Joruri exists to bridge this gap by making specialized public services easy to discover, understand, and reach.
+          </p>
+        </div>
+      </section>
+
+      <!-- JORURI'S PURPOSE SECTION -->
+      <section class="about-section">
+        <div class="about-card-box">
+          <h2 id="about-purpose-title" class="about-section-title">Our Purpose</h2>
+          <p id="about-purpose-main" class="about-highlight-text">
+            "Joruri aims to make public-service information easier to discover and understand, helping people identify the service they need and reach it more easily."
+          </p>
+          <div class="purpose-pillars">
+            <div class="purpose-pillar">
+              <div class="pillar-num">1</div>
+              <h3 id="about-pillar1-title" class="pillar-title">Find the Right Service</h3>
+              <p id="about-pillar1-desc" class="pillar-desc">Search and discover the exact helpline suited for your situation.</p>
+            </div>
+            <div class="purpose-pillar">
+              <div class="pillar-num">2</div>
+              <h3 id="about-pillar2-title" class="pillar-title">Understand What It Does</h3>
+              <p id="about-pillar2-desc" class="pillar-desc">View official operating hours, toll-free status, and service scope.</p>
+            </div>
+            <div class="purpose-pillar">
+              <div class="pillar-num">3</div>
+              <h3 id="about-pillar3-title" class="pillar-title">Reach It at the Right Time</h3>
+              <p id="about-pillar3-desc" class="pillar-desc">Connect directly via quick call or copy controls without delay.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MISSION SECTION -->
+      <section class="about-section">
+        <div class="about-mission-box">
+          <h2 id="about-mission-title" class="mission-label">OUR MISSION</h2>
+          <div id="about-mission-statement" class="mission-statement">
+            Help people reach the right public service at the right time.
+          </div>
+          <p id="about-mission-desc" class="mission-desc">
+            Joruri aims to raise awareness of the wider range of public services available in Bangladesh and make important service information easier for citizens to access.
+          </p>
+        </div>
+      </section>
+
+      <!-- WHAT JORURI PROVIDES (4 CARDS) -->
+      <section class="about-section">
+        <div class="section-header-center">
+          <h2 id="about-provides-title" class="section-title">WHAT JORURI PROVIDES</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="provides-grid">
+          <div class="provides-card">
+            <div class="provides-icon">🔎</div>
+            <h3 id="about-card1-title" class="provides-card-title">Search</h3>
+            <p id="about-card1-desc" class="provides-card-desc">Find public-service numbers by service name, category, topic, or phone number.</p>
+          </div>
+
+          <div class="provides-card">
+            <div class="provides-icon">ℹ️</div>
+            <h3 id="about-card2-title" class="provides-card-title">Understand</h3>
+            <p id="about-card2-desc" class="provides-card-desc">Learn what a particular service or number is intended for before making a call.</p>
+          </div>
+
+          <div class="provides-card">
+            <div class="provides-icon">📞</div>
+            <h3 id="about-card3-title" class="provides-card-title">Call</h3>
+            <p id="about-card3-desc" class="provides-card-desc">Call a number directly from any compatible mobile or desktop device.</p>
+          </div>
+
+          <div class="provides-card">
+            <div class="provides-icon">📋</div>
+            <h3 id="about-card4-title" class="provides-card-title">Copy</h3>
+            <p id="about-card4-desc" class="provides-card-desc">Copy a number with a single click for use elsewhere or sharing.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUILT FOR EVERYONE -->
+      <section class="about-section">
+        <div class="about-card-box">
+          <h2 id="about-everyone-title" class="about-section-title">Built for Everyone</h2>
+          <p id="about-everyone-intro" class="about-text">
+            Joruri is thoughtfully designed with high contrast, large readable typography, and simple navigation to ensure seamless access for:
+          </p>
+          <ul class="everyone-list">
+            <li id="about-everyone-item1">General users searching for government contacts</li>
+            <li id="about-everyone-item2">People in urgent need of emergency helplines</li>
+            <li id="about-everyone-item3">Older citizens or users with limited technical experience</li>
+            <li id="about-everyone-item4">Mobile device users seeking fast on-the-go access</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- INDEPENDENT INFORMATION HUB (DISCLAIMER) -->
+      <section class="about-section">
+        <div class="about-disclaimer-box">
+          <div class="disclaimer-header">
+            <span class="disclaimer-icon">🛡️</span>
+            <h2 id="about-disclaimer-title" class="disclaimer-title">An Independent Information Hub</h2>
+          </div>
+          <div id="about-disclaimer-banner" class="disclaimer-banner">
+            Joruri is not an official government platform.
+          </div>
+          <p id="about-disclaimer-text" class="disclaimer-text">
+            It is an independent public-service information hub created to make important service information easier for citizens to find and use. All contact details are compiled from verified public sources.
+          </p>
         </div>
       </section>
 

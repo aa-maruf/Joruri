@@ -570,6 +570,344 @@ html[lang="bn"] .saving-step {
   width: 100%;
 }
 
+/* ==========================================================================
+   5B. ABOUT PAGE STYLES
+   ========================================================================== */
+.about-hero-section {
+  text-align: center;
+  max-width: 760px;
+  margin: 0.5rem auto 2.5rem auto;
+  width: 100%;
+}
+
+.about-hero-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-green);
+  background-color: #DCFCE7;
+  border: 1px solid #86EFAC;
+  padding: 0.25rem 0.75rem;
+  border-radius: 14px;
+  margin-bottom: 0.85rem;
+}
+
+.about-hero-title {
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+html[lang="bn"] .about-hero-title {
+  font-family: var(--font-bn);
+  line-height: 1.35;
+}
+
+.about-hero-desc {
+  font-size: 1.075rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+html[lang="bn"] .about-hero-desc {
+  font-family: var(--font-bn);
+}
+
+.about-section {
+  margin-bottom: 2.25rem;
+  width: 100%;
+}
+
+.about-card-box {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.about-section-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--primary-green);
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+html[lang="bn"] .about-section-title {
+  font-family: var(--font-bn);
+}
+
+.about-text {
+  font-size: 0.975rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.about-text:last-child {
+  margin-bottom: 0;
+}
+
+html[lang="bn"] .about-text {
+  font-family: var(--font-bn);
+}
+
+.about-highlight-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-green);
+  background-color: #FAF8F5;
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid var(--primary-green);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  line-height: 1.55;
+}
+
+html[lang="bn"] .about-highlight-text {
+  font-family: var(--font-bn);
+}
+
+/* Purpose Pillars */
+.purpose-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.purpose-pillar {
+  background-color: #FAF8F5;
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: var(--radius-sm);
+}
+
+.pillar-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--primary-green);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.65rem;
+}
+
+.pillar-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+html[lang="bn"] .pillar-title {
+  font-family: var(--font-bn);
+  color: var(--primary-green);
+}
+
+.pillar-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+html[lang="bn"] .pillar-desc {
+  font-family: var(--font-bn);
+}
+
+/* Mission Box */
+.about-mission-box {
+  background-color: #FAF8F5;
+  border: 1.5px solid #86EFAC;
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2rem;
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(0, 103, 71, 0.04);
+}
+
+.mission-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary-green);
+  margin-bottom: 0.5rem;
+}
+
+html[lang="bn"] .mission-label {
+  font-family: var(--font-bn);
+}
+
+.mission-statement {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+}
+
+html[lang="bn"] .mission-statement {
+  font-family: var(--font-bn);
+  color: var(--primary-green);
+}
+
+.mission-desc {
+  font-size: 0.975rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+html[lang="bn"] .mission-desc {
+  font-family: var(--font-bn);
+}
+
+/* What Joruri Provides (4 Cards) */
+.provides-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.provides-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.provides-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.provides-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.provides-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+html[lang="bn"] .provides-card-title {
+  font-family: var(--font-bn);
+  color: var(--primary-green);
+}
+
+.provides-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+html[lang="bn"] .provides-card-desc {
+  font-family: var(--font-bn);
+}
+
+/* Built for Everyone List */
+.everyone-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.75rem;
+}
+
+.everyone-list li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+html[lang="bn"] .everyone-list li {
+  font-family: var(--font-bn);
+}
+
+.everyone-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--primary-green);
+  font-weight: 800;
+}
+
+/* Independent Information Hub Disclaimer */
+.about-disclaimer-box {
+  background-color: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.disclaimer-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.disclaimer-icon {
+  font-size: 1.25rem;
+}
+
+.disclaimer-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+html[lang="bn"] .disclaimer-title {
+  font-family: var(--font-bn);
+}
+
+.disclaimer-banner {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #B91C1C;
+  background-color: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.85rem;
+}
+
+html[lang="bn"] .disclaimer-banner {
+  font-family: var(--font-bn);
+}
+
+.disclaimer-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+html[lang="bn"] .disclaimer-text {
+  font-family: var(--font-bn);
+}
+
 
 
 /* ==========================================================================
@@ -1329,11 +1667,11 @@ html[lang="bn"] .empty-desc {
 
 /* Tablet Screens (641px - 900px) */
 @media (max-width: 900px) {
-  .workflow-grid {
+  .workflow-grid, .provides-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .capability-grid {
+  .capability-grid, .purpose-pillars {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -1396,16 +1734,16 @@ html[lang="bn"] .empty-desc {
     padding-bottom: 2.5rem;
   }
 
-  /* Home Hero Adjustments */
-  .home-hero-section {
+  /* Home & About Hero Adjustments */
+  .home-hero-section, .about-hero-section {
     margin-bottom: 2rem;
   }
 
-  .home-hero-title {
+  .home-hero-title, .about-hero-title {
     font-size: 1.6rem;
   }
 
-  .home-hero-desc {
+  .home-hero-desc, .about-hero-desc {
     font-size: 0.975rem;
   }
 
@@ -1420,14 +1758,14 @@ html[lang="bn"] .empty-desc {
     transform: rotate(90deg);
   }
 
-  /* Home Section Grids Stack Vertically on Mobile */
-  .workflow-grid, .capability-grid, .home-emergency-grid, .contact-grid {
+  /* Home & About Section Grids Stack Vertically on Mobile */
+  .workflow-grid, .capability-grid, .home-emergency-grid, .contact-grid, .purpose-pillars, .provides-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  .saving-card-box {
-    padding: 1.5rem 1rem;
+  .saving-card-box, .about-card-box, .about-mission-box, .about-disclaimer-box {
+    padding: 1.25rem 1rem;
   }
 
   .saving-flow-wrapper {

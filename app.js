@@ -8,6 +8,7 @@ const i18n = {
     // Header & Navigation
     navHome: "Home",
     navPhone: "Emergency Services",
+    navAbout: "About",
     navWebsites: "Websites",
     navApps: "Apps",
     soonBadge: "Soon",
@@ -51,6 +52,44 @@ const i18n = {
 
     // Emergency Section
     homeEmergencyTitle: "TOP EMERGENCY NUMBERS",
+
+    // About Page View
+    aboutBadge: "ABOUT JORURI",
+    aboutHeroTitle: "Making Public-Service Information Easier to Find",
+    aboutHeroDesc: "Joruri (জরুরি) is a public-service contact directory designed to help people in Bangladesh quickly find and access important public-service phone numbers.",
+    aboutWhyTitle: "Why Joruri?",
+    aboutWhyP1: "Bangladesh has many important public and government services, but people may not always know which number to call when they need assistance.",
+    aboutWhyP2: "While almost everyone is familiar with the national emergency number 999, fewer people know about specialized public-service hotlines such as child helplines, healthcare support, or legal assistance. When citizens are unaware of these dedicated services, they often rely solely on 999 even when another specialized hotline would be more direct and appropriate.",
+    aboutWhyP3: "Joruri exists to bridge this gap by making specialized public services easy to discover, understand, and reach.",
+    aboutPurposeTitle: "Our Purpose",
+    aboutPurposeMain: "\"Joruri aims to make public-service information easier to discover and understand, helping people identify the service they need and reach it more easily.\"",
+    aboutPillar1Title: "Find the Right Service",
+    aboutPillar1Desc: "Search and discover the exact helpline suited for your situation.",
+    aboutPillar2Title: "Understand What It Does",
+    aboutPillar2Desc: "View official operating hours, toll-free status, and service scope.",
+    aboutPillar3Title: "Reach It at the Right Time",
+    aboutPillar3Desc: "Connect directly via quick call or copy controls without delay.",
+    aboutMissionTitle: "OUR MISSION",
+    aboutMissionStatement: "Help people reach the right public service at the right time.",
+    aboutMissionDesc: "Joruri aims to raise awareness of the wider range of public services available in Bangladesh and make important service information easier for citizens to access.",
+    aboutProvidesTitle: "WHAT JORURI PROVIDES",
+    aboutCard1Title: "Search",
+    aboutCard1Desc: "Find public-service numbers by service name, category, topic, or phone number.",
+    aboutCard2Title: "Understand",
+    aboutCard2Desc: "Learn what a particular service or number is intended for before making a call.",
+    aboutCard3Title: "Call",
+    aboutCard3Desc: "Call a number directly from any compatible mobile or desktop device.",
+    aboutCard4Title: "Copy",
+    aboutCard4Desc: "Copy a number with a single click for use elsewhere or sharing.",
+    aboutEveryoneTitle: "Built for Everyone",
+    aboutEveryoneIntro: "Joruri is thoughtfully designed with high contrast, large readable typography, and simple navigation to ensure seamless access for:",
+    aboutEveryoneItem1: "General users searching for government contacts",
+    aboutEveryoneItem2: "People in urgent need of emergency helplines",
+    aboutEveryoneItem3: "Older citizens or users with limited technical experience",
+    aboutEveryoneItem4: "Mobile device users seeking fast on-the-go access",
+    aboutDisclaimerTitle: "An Independent Information Hub",
+    aboutDisclaimerBanner: "Joruri is not an official government platform.",
+    aboutDisclaimerText: "It is an independent public-service information hub created to make important service information easier for citizens to find and use. All contact details are compiled from verified public sources.",
 
     // Phone Directory View
     heroTitle: "Important Public-Service Contacts in Bangladesh",
@@ -96,6 +135,7 @@ const i18n = {
     // Header & Navigation
     navHome: "হোম",
     navPhone: "জরুরির সেবা",
+    navAbout: "জরুরি সম্পর্কে",
     navWebsites: "ওয়েবসাইট",
     navApps: "অ্যাপস",
     soonBadge: "শীঘ্রই",
@@ -139,6 +179,44 @@ const i18n = {
 
     // Emergency Section
     homeEmergencyTitle: "জরুরি শীর্ষ নম্বরসমূহ",
+
+    // About Page View
+    aboutBadge: "জরুরি সম্পর্কে",
+    aboutHeroTitle: "জনসেবামূলক তথ্য সহজে পাওয়ার মাধ্যম",
+    aboutHeroDesc: "জরুরি (Joruri) হলো বাংলাদেশের একটি জনসেবামূলক ফোন ডিরেক্টরি যা নাগরিকদের প্রয়োজনীয় সরকারি ও জরুরি সেবার নম্বর সহজে খুঁজে পেতে সহায়তা করে।",
+    aboutWhyTitle: "কেন জরুরি?",
+    aboutWhyP1: "বাংলাদেশে অনেক প্রয়োজনীয় সরকারি ও জনসেবামূলক সংস্থা রয়েছে, তবে নাগরিকরা প্রায়শই জানেন না নির্দিষ্ট প্রয়োজনে কোন নম্বরে যোগাযোগ করতে হবে।",
+    aboutWhyP2: "জাতীয় জরুরি সেবা ৯৯৯ সম্পর্কে প্রায় সবাই জানেন, কিন্তু নারী ও শিশু হেল্পলাইন, স্বাস্থ্যসেবা বা আইনি সহায়তার মতো বিশেষায়িত নম্বরগুলো অনেকের কাছেই অপরিচিত। এই বিশেষায়িত সেবাগুলো সম্পর্কে ধারণা না থাকায় অনেকেই বিকল্প না পেয়ে ৯৯৯-এর ওপর নির্ভর করেন, যদিও অন্য কোনো নির্দিষ্ট হেল্পলাইন আরও সরাসরি ও উপযুক্ত হতে পারত।",
+    aboutWhyP3: "জরুরি-র লক্ষ্য হলো এই তথ্যের ঘাটতি পূরণ করে বিশেষায়িত জনসেবাসমূহ আবিষ্কার, অনুধাবন এবং যোগাযোগের প্রক্রিয়াকে সহজতর করা।",
+    aboutPurposeTitle: "আমাদের উদ্দেশ্য",
+    aboutPurposeMain: "\"জরুরির লক্ষ্য হলো জনসেবামূলক তথ্য জানা ও বোঝা আরও সহজ করা, যাতে মানুষ তাদের প্রয়োজনীয় সেবা শনাক্ত করতে পারে এবং সহজে যোগাযোগ করতে পারে।\"",
+    aboutPillar1Title: "সঠিক সেবাটি খুঁজুন",
+    aboutPillar1Desc: "আপনার পরিস্থিতির জন্য উপযুক্ত নির্দিষ্ট হেল্পলাইন অনুসন্ধান করুন।",
+    aboutPillar2Title: "সেবাটি সম্পর্কে জানুন",
+    aboutPillar2Desc: "অফিসিয়াল সময়সূচী, টোল-ফ্রি তথ্য ও সেবার আওতা জানুন।",
+    aboutPillar3Title: "সঠিক সময়ে যোগাযোগ করুন",
+    aboutPillar3Desc: "সরাসরি কল বা কপি অপশনের মাধ্যমে অবিলম্বে যোগাযোগ করুন।",
+    aboutMissionTitle: "আমাদের মিশন",
+    aboutMissionStatement: "মানুষকে সঠিক সময়ে সঠিক জনসেবার আওতায় নিয়ে আসা।",
+    aboutMissionDesc: "জরুরির উদ্দেশ্য হলো বাংলাদেশে বিদ্যমান বিভিন্ন সরকারি ও জনসেবা সম্পর্কে নাগরিকদের মধ্যে সচেতনতা বৃদ্ধি করা এবং তথ্য পাওয়ার প্রক্রিয়াকে আরও সহজ করা।",
+    aboutProvidesTitle: "জরুরি যা প্রদান করে",
+    aboutCard1Title: "অনুসন্ধান (Search)",
+    aboutCard1Desc: "সেবার নাম, ক্যাটাগরি, বিষয় বা ফোন নম্বর দিয়ে সহজে জনসেবা খুঁজুন।",
+    aboutCard2Title: "অনুধাবন (Understand)",
+    aboutCard2Desc: "কল করার আগেই নির্দিষ্ট নম্বর বা সেবাটি কী কাজের জন্য তা ভালোভাবে জানুন।",
+    aboutCard3Title: "সরাসরি কল (Call)",
+    aboutCard3Desc: "যেকোনো উপযুক্ত ডিভাইস থেকে এক ট্যাপে সরাসরি নম্বরে কল করুন।",
+    aboutCard4Title: "সহজ কপি (Copy)",
+    aboutCard4Desc: "শেয়ার বা অন্য কোথাও ব্যবহারের জন্য এক ক্লিকে নম্বর কপি করে রাখুন।",
+    aboutEveryoneTitle: "সকলের জন্য তৈরি",
+    aboutEveryoneIntro: "সহজ নেভিগেশন এবং স্পষ্ট লেখার মাধ্যমে জরুরি-কে এমনভাবে ডিজাইন করা হয়েছে যাতে এটি সহজেই ব্যবহার করতে পারেন:",
+    aboutEveryoneItem1: "সরকারি যোগাযোগের তথ্য অনুসন্ধানী সাধারণ ব্যবহারকারীগণ",
+    aboutEveryoneItem2: "জরুরি সেবা অনুসন্ধানে নিয়োজিত নাগরিকগণ",
+    aboutEveryoneItem3: "বয়োজ্যেষ্ঠ বা তুলনামূলক কম প্রযুক্তি-অভিজ্ঞ নাগরিকগণ",
+    aboutEveryoneItem4: "মোবাইল ফোন থেকে দ্রুত সেবা সন্ধানকারী ব্যবহারকারীগণ",
+    aboutDisclaimerTitle: "স্বাধীন তথ্য কেন্দ্র",
+    aboutDisclaimerBanner: "জরুরি কোনো সরকারি প্রাতিষ্ঠানিক প্ল্যাটফর্ম নয়।",
+    aboutDisclaimerText: "এটি একটি স্বাধীন জনসেবামূলক তথ্য কেন্দ্র যা নাগরিকদের প্রয়োজনীয় সেবা খোঁজা ও ব্যবহারের প্রক্রিয়াকে সহজ করার জন্য তৈরি করা হয়েছে। সকল তথ্য নিবন্ধিত ও যাচাইকৃত অফিসিয়াল উৎস থেকে সংগৃহীত।",
 
     // Phone Directory View
     heroTitle: "বাংলাদেশের গুরুত্বপূর্ণ সরকারি ও জরুরি নম্বরসমূহ",
@@ -184,7 +262,12 @@ const i18n = {
 
 // 2. STATE MANAGEMENT
 let currentLang = localStorage.getItem('joruri_lang') || 'en';
-let currentView = (window.location.hash === '#phone' || window.location.hash === '#directory') ? 'phone' : 'home';
+let currentView = 'home';
+if (window.location.hash === '#phone' || window.location.hash === '#directory') {
+  currentView = 'phone';
+} else if (window.location.hash === '#about') {
+  currentView = 'about';
+}
 let currentCategory = 'All';
 let searchQuery = '';
 const selectedIds = new Set();
@@ -229,9 +312,9 @@ function switchLanguage(lang) {
 function setupNavigationControls() {
   const navHome = document.getElementById('nav-home');
   const navPhone = document.getElementById('nav-phone');
+  const navAbout = document.getElementById('nav-about');
   const brandLink = document.getElementById('brand-link');
   const btnExplore = document.getElementById('home-btn-explore');
-  const btnCta = document.getElementById('home-btn-cta');
 
   if (navHome) {
     navHome.addEventListener('click', (e) => {
@@ -244,6 +327,13 @@ function setupNavigationControls() {
     navPhone.addEventListener('click', (e) => {
       e.preventDefault();
       switchView('phone');
+    });
+  }
+
+  if (navAbout) {
+    navAbout.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('about');
     });
   }
 
@@ -261,7 +351,12 @@ function setupNavigationControls() {
   }
 
   window.addEventListener('hashchange', () => {
-    const hashView = (window.location.hash === '#phone' || window.location.hash === '#directory') ? 'phone' : 'home';
+    let hashView = 'home';
+    if (window.location.hash === '#phone' || window.location.hash === '#directory') {
+      hashView = 'phone';
+    } else if (window.location.hash === '#about') {
+      hashView = 'about';
+    }
     if (hashView !== currentView) {
       switchView(hashView);
     }
@@ -273,36 +368,46 @@ function switchView(viewName) {
 
   const viewHome = document.getElementById('view-home');
   const viewDirectory = document.getElementById('view-directory');
+  const viewAbout = document.getElementById('view-about');
   const navHome = document.getElementById('nav-home');
   const navPhone = document.getElementById('nav-phone');
+  const navAbout = document.getElementById('nav-about');
+
+  if (viewHome) viewHome.style.display = 'none';
+  if (viewDirectory) viewDirectory.style.display = 'none';
+  if (viewAbout) viewAbout.style.display = 'none';
+
+  [navHome, navPhone, navAbout].forEach(tab => {
+    if (tab) {
+      tab.classList.remove('active');
+      tab.removeAttribute('aria-current');
+    }
+  });
 
   if (viewName === 'home') {
     if (viewHome) viewHome.style.display = 'block';
-    if (viewDirectory) viewDirectory.style.display = 'none';
     if (navHome) {
       navHome.classList.add('active');
       navHome.setAttribute('aria-current', 'page');
     }
-    if (navPhone) {
-      navPhone.classList.remove('active');
-      navPhone.removeAttribute('aria-current');
-    }
     window.location.hash = 'home';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (viewName === 'about') {
+    if (viewAbout) viewAbout.style.display = 'block';
+    if (navAbout) {
+      navAbout.classList.add('active');
+      navAbout.setAttribute('aria-current', 'page');
+    }
+    window.location.hash = 'about';
   } else {
-    if (viewHome) viewHome.style.display = 'none';
     if (viewDirectory) viewDirectory.style.display = 'block';
     if (navPhone) {
       navPhone.classList.add('active');
       navPhone.setAttribute('aria-current', 'page');
     }
-    if (navHome) {
-      navHome.classList.remove('active');
-      navHome.removeAttribute('aria-current');
-    }
     window.location.hash = 'phone';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 6. SEARCH INPUT LISTENER
@@ -366,11 +471,13 @@ function applyLanguage(lang) {
   // Update Header Navigation Labels
   const navHome = document.getElementById('nav-home');
   const navPhone = document.getElementById('nav-phone');
+  const navAbout = document.getElementById('nav-about');
   const navWebsites = document.getElementById('nav-websites');
   const navApps = document.getElementById('nav-apps');
 
   if (navHome) navHome.textContent = t.navHome;
   if (navPhone) navPhone.textContent = t.navPhone;
+  if (navAbout) navAbout.textContent = t.navAbout;
   if (navWebsites) navWebsites.innerHTML = `${t.navWebsites} <span class="badge-soon">${t.soonBadge}</span>`;
   if (navApps) navApps.innerHTML = `${t.navApps} <span class="badge-soon">${t.soonBadge}</span>`;
 
@@ -477,6 +584,90 @@ function applyLanguage(lang) {
   if (activeModalItem) {
     openDetailsModal(activeModalItem.id);
   }
+
+  // --- C. ABOUT PAGE TEXT UPDATES ---
+  const aboutBadge = document.getElementById('about-hero-badge');
+  const aboutHeroTitle = document.getElementById('about-hero-title');
+  const aboutHeroDesc = document.getElementById('about-hero-desc');
+  if (aboutBadge) aboutBadge.textContent = t.aboutBadge;
+  if (aboutHeroTitle) aboutHeroTitle.textContent = t.aboutHeroTitle;
+  if (aboutHeroDesc) aboutHeroDesc.textContent = t.aboutHeroDesc;
+
+  const aboutWhyTitle = document.getElementById('about-why-title');
+  const aboutWhyP1 = document.getElementById('about-why-p1');
+  const aboutWhyP2 = document.getElementById('about-why-p2');
+  const aboutWhyP3 = document.getElementById('about-why-p3');
+  if (aboutWhyTitle) aboutWhyTitle.textContent = t.aboutWhyTitle;
+  if (aboutWhyP1) aboutWhyP1.textContent = t.aboutWhyP1;
+  if (aboutWhyP2) aboutWhyP2.textContent = t.aboutWhyP2;
+  if (aboutWhyP3) aboutWhyP3.textContent = t.aboutWhyP3;
+
+  const aboutPurposeTitle = document.getElementById('about-purpose-title');
+  const aboutPurposeMain = document.getElementById('about-purpose-main');
+  const aboutPillar1Title = document.getElementById('about-pillar1-title');
+  const aboutPillar1Desc = document.getElementById('about-pillar1-desc');
+  const aboutPillar2Title = document.getElementById('about-pillar2-title');
+  const aboutPillar2Desc = document.getElementById('about-pillar2-desc');
+  const aboutPillar3Title = document.getElementById('about-pillar3-title');
+  const aboutPillar3Desc = document.getElementById('about-pillar3-desc');
+
+  if (aboutPurposeTitle) aboutPurposeTitle.textContent = t.aboutPurposeTitle;
+  if (aboutPurposeMain) aboutPurposeMain.textContent = t.aboutPurposeMain;
+  if (aboutPillar1Title) aboutPillar1Title.textContent = t.aboutPillar1Title;
+  if (aboutPillar1Desc) aboutPillar1Desc.textContent = t.aboutPillar1Desc;
+  if (aboutPillar2Title) aboutPillar2Title.textContent = t.aboutPillar2Title;
+  if (aboutPillar2Desc) aboutPillar2Desc.textContent = t.aboutPillar2Desc;
+  if (aboutPillar3Title) aboutPillar3Title.textContent = t.aboutPillar3Title;
+  if (aboutPillar3Desc) aboutPillar3Desc.textContent = t.aboutPillar3Desc;
+
+  const aboutMissionTitle = document.getElementById('about-mission-title');
+  const aboutMissionStatement = document.getElementById('about-mission-statement');
+  const aboutMissionDesc = document.getElementById('about-mission-desc');
+  if (aboutMissionTitle) aboutMissionTitle.textContent = t.aboutMissionTitle;
+  if (aboutMissionStatement) aboutMissionStatement.textContent = t.aboutMissionStatement;
+  if (aboutMissionDesc) aboutMissionDesc.textContent = t.aboutMissionDesc;
+
+  const aboutProvidesTitle = document.getElementById('about-provides-title');
+  const aboutCard1Title = document.getElementById('about-card1-title');
+  const aboutCard1Desc = document.getElementById('about-card1-desc');
+  const aboutCard2Title = document.getElementById('about-card2-title');
+  const aboutCard2Desc = document.getElementById('about-card2-desc');
+  const aboutCard3Title = document.getElementById('about-card3-title');
+  const aboutCard3Desc = document.getElementById('about-card3-desc');
+  const aboutCard4Title = document.getElementById('about-card4-title');
+  const aboutCard4Desc = document.getElementById('about-card4-desc');
+
+  if (aboutProvidesTitle) aboutProvidesTitle.textContent = t.aboutProvidesTitle;
+  if (aboutCard1Title) aboutCard1Title.textContent = t.aboutCard1Title;
+  if (aboutCard1Desc) aboutCard1Desc.textContent = t.aboutCard1Desc;
+  if (aboutCard2Title) aboutCard2Title.textContent = t.aboutCard2Title;
+  if (aboutCard2Desc) aboutCard2Desc.textContent = t.aboutCard2Desc;
+  if (aboutCard3Title) aboutCard3Title.textContent = t.aboutCard3Title;
+  if (aboutCard3Desc) aboutCard3Desc.textContent = t.aboutCard3Desc;
+  if (aboutCard4Title) aboutCard4Title.textContent = t.aboutCard4Title;
+  if (aboutCard4Desc) aboutCard4Desc.textContent = t.aboutCard4Desc;
+
+  const aboutEveryoneTitle = document.getElementById('about-everyone-title');
+  const aboutEveryoneIntro = document.getElementById('about-everyone-intro');
+  const aboutEveryoneItem1 = document.getElementById('about-everyone-item1');
+  const aboutEveryoneItem2 = document.getElementById('about-everyone-item2');
+  const aboutEveryoneItem3 = document.getElementById('about-everyone-item3');
+  const aboutEveryoneItem4 = document.getElementById('about-everyone-item4');
+
+  if (aboutEveryoneTitle) aboutEveryoneTitle.textContent = t.aboutEveryoneTitle;
+  if (aboutEveryoneIntro) aboutEveryoneIntro.textContent = t.aboutEveryoneIntro;
+  if (aboutEveryoneItem1) aboutEveryoneItem1.textContent = t.aboutEveryoneItem1;
+  if (aboutEveryoneItem2) aboutEveryoneItem2.textContent = t.aboutEveryoneItem2;
+  if (aboutEveryoneItem3) aboutEveryoneItem3.textContent = t.aboutEveryoneItem3;
+  if (aboutEveryoneItem4) aboutEveryoneItem4.textContent = t.aboutEveryoneItem4;
+
+  const aboutDisclaimerTitle = document.getElementById('about-disclaimer-title');
+  const aboutDisclaimerBanner = document.getElementById('about-disclaimer-banner');
+  const aboutDisclaimerText = document.getElementById('about-disclaimer-text');
+
+  if (aboutDisclaimerTitle) aboutDisclaimerTitle.textContent = t.aboutDisclaimerTitle;
+  if (aboutDisclaimerBanner) aboutDisclaimerBanner.textContent = t.aboutDisclaimerBanner;
+  if (aboutDisclaimerText) aboutDisclaimerText.textContent = t.aboutDisclaimerText;
 
   // Footer Text
   const footerBrand = document.getElementById('footer-brand');
