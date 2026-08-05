@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JORURI (জরুরি) — App Logic & Contact Management (Phase 1, 2 & 3 Baseline)
+   JORURI (জরুরি) — App Logic & Service Details Modal Implementation
    ========================================================================== */
 
 // 1. I18N DICTIONARY FOR INTERFACE STRINGS
@@ -23,6 +23,17 @@ const i18n = {
     clearSelection: "Clear Selection",
     exportVCard: "vCard (.vcf)",
     exportCSV: "CSV (.csv)",
+    viewDetails: "View Details ↗",
+    tollFree: "Toll-Free",
+    badge247: "24/7",
+    yes: "Yes",
+    no: "No",
+    unknown: "N/A",
+    modalAvailability: "Availability",
+    modalTollFree: "Toll-Free",
+    modalCoverage: "Coverage",
+    modalVerified: "Verified Date",
+    modalSource: "Official Source",
     categories: {
       "All": "All",
       "Emergency": "Emergency",
@@ -54,6 +65,17 @@ const i18n = {
     clearSelection: "নির্বাচন বাতিল",
     exportVCard: "vCard (.vcf)",
     exportCSV: "CSV (.csv)",
+    viewDetails: "বিস্তারিত দেখুন ↗",
+    tollFree: "টোল-ফ্রি",
+    badge247: "২৪/৭",
+    yes: "হ্যাঁ",
+    no: "না",
+    unknown: "প্রযোজ্য নয়",
+    modalAvailability: "প্রাপ্যতা",
+    modalTollFree: "টোল-ফ্রি",
+    modalCoverage: "আওতা",
+    modalVerified: "যাচাইয়ের তারিখ",
+    modalSource: "অফিসিয়াল উৎস",
     categories: {
       "All": "সব",
       "Emergency": "জরুরি",
@@ -73,6 +95,7 @@ let currentLang = localStorage.getItem('joruri_lang') || 'en';
 let currentCategory = 'All';
 let searchQuery = '';
 const selectedIds = new Set();
+let activeModalItem = null;
 
 const categoryKeys = ["All", "Emergency", "Healthcare", "Government", "Law & Order", "Women & Children"];
 
@@ -81,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupLanguageControls();
   setupSearchInput();
   setupSelectionBarListeners();
+  setupModalEventListeners();
   applyLanguage(currentLang);
 });
 
@@ -197,6 +221,11 @@ function applyLanguage(lang) {
   // Render Contacts Grid & Selection Bar UI
   renderFilteredContacts();
 
+  // If modal is currently open, refresh modal content in new language
+  if (activeModalItem) {
+    openDetailsModal(activeModalItem.id);
+  }
+
   // Update Footer Text
   const footerBrand = document.getElementById('footer-brand');
   const footerDisclaimer = document.getElementById('footer-disclaimer');
@@ -294,36 +323,78 @@ function renderFilteredContacts() {
     const categoryLabel = t.categories[item.category] || item.category;
     const isEmergency = item.category === 'Emergency';
 
+    // Dynamic Badges
+    const is247 = item.availability === "24/7";
+    const isTollFree = item.toll_free === "True" || item.toll_free === true;
+
     return `
-      <article class="contact-card ${isEmergency ? 'emergency-card' : ''} ${isSelected ? 'selected' : ''}" data-id="${item.id}">
+      <article 
+        class="contact-card ${isEmergency ? 'emergency-card' : ''} ${isSelected ? 'selected' : ''}" 
+        data-id="${item.id}"
+        tabindex="0"
+        role="button"
+        aria-haspopup="dialog"
+        aria-label="${title}"
+        onclick="openDetailsModal('${item.id}')"
+        onkeydown="handleCardKeydown(event, '${item.id}')"
+      >
         <div class="card-header">
-          <label class="card-checkbox-wrapper" title="${t.selectAll}">
-            <input 
-              type="checkbox" 
-              class="card-checkbox" 
-              ${isSelected ? 'checked' : ''} 
-              onchange="toggleSelectContact('${item.id}', this.checked)"
-            >
-          </label>
-          <span class="category-badge ${isEmergency ? 'badge-emergency' : ''}">${categoryLabel}</span>
+          <div class="card-header-left">
+            <label class="card-checkbox-wrapper" title="${t.selectAll}" onclick="event.stopPropagation()">
+              <input 
+                type="checkbox" 
+                class="card-checkbox" 
+                ${isSelected ? 'checked' : ''} 
+                onchange="event.stopPropagation(); toggleSelectContact('${item.id}', this.checked)"
+              >
+            </label>
+            <span class="category-badge ${isEmergency ? 'badge-emergency' : ''}">${categoryLabel}</span>
+          </div>
+          <div class="extra-badges-container">
+            ${is247 ? `<span class="badge-247">${t.badge247}</span>` : ''}
+            ${isTollFree ? `<span class="badge-tollfree">${t.tollFree}</span>` : ''}
+          </div>
         </div>
+
         <div class="card-body">
           <h2 class="service-title">${title}</h2>
           <p class="service-description">${description}</p>
           <div class="phone-number-display">${item.phone_number}</div>
         </div>
-        <div class="card-actions">
-          <a href="tel:${item.phone_number}" class="btn btn-call ${isEmergency ? 'btn-call-emergency' : ''}">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            ${t.callBtn} ${item.phone_number}
-          </a>
-          <button class="btn btn-copy" type="button" onclick="copyToClipboard('${item.phone_number}', this)">${t.copyBtn}</button>
+
+        <div class="card-footer-wrapper">
+          <div class="card-actions">
+            <a 
+              href="tel:${item.phone_number}" 
+              class="btn btn-call ${isEmergency ? 'btn-call-emergency' : ''}"
+              onclick="event.stopPropagation()"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              ${t.callBtn} ${item.phone_number}
+            </a>
+            <button 
+              class="btn btn-copy" 
+              type="button" 
+              onclick="event.stopPropagation(); copyToClipboard('${item.phone_number}', this)"
+            >${t.copyBtn}</button>
+          </div>
+          <div class="card-hover-affordance">
+            <span class="view-details-text">${t.viewDetails}</span>
+          </div>
         </div>
       </article>
     `;
   }).join('');
+}
+
+// Keyboard navigation for card
+function handleCardKeydown(event, id) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    openDetailsModal(id);
+  }
 }
 
 // 12. SELECTION HANDLERS
@@ -392,7 +463,150 @@ function formatCount(num, lang) {
   return num.toString().replace(/\d/g, d => bnDigits[d]);
 }
 
-// 15. MINIMAL vCARD EXPORT (.vcf)
+// 15. SERVICE DETAILS MODAL CONTROLLER
+function openDetailsModal(id) {
+  const item = contactsData.find(c => c.id === id);
+  if (!item) return;
+
+  activeModalItem = item;
+  const t = i18n[currentLang];
+  const modal = document.getElementById('details-modal');
+  if (!modal) return;
+
+  const isBn = currentLang === 'bn';
+  const title = isBn ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
+  const description = isBn ? (item.description_bn || item.description_en) : (item.description_en || item.description_bn);
+  const organization = isBn ? (item.organization_bn || item.organization_en) : (item.organization_en || item.organization_bn);
+
+  const categoryLabel = t.categories[item.category] || item.category;
+  const isEmergency = item.category === 'Emergency';
+  const is247 = item.availability === "24/7";
+  const isTollFree = item.toll_free === "True" || item.toll_free === true;
+
+  // Set Badges
+  const catBadgeEl = document.getElementById('modal-category-badge');
+  if (catBadgeEl) {
+    catBadgeEl.textContent = categoryLabel;
+    catBadgeEl.className = `category-badge ${isEmergency ? 'badge-emergency' : ''}`;
+  }
+
+  const extraBadgesEl = document.getElementById('modal-extra-badges');
+  if (extraBadgesEl) {
+    extraBadgesEl.innerHTML = `
+      ${is247 ? `<span class="badge-247">${t.badge247}</span>` : ''}
+      ${isTollFree ? `<span class="badge-tollfree">${t.tollFree}</span>` : ''}
+    `;
+  }
+
+  // Set Header Content
+  const titleEl = document.getElementById('modal-service-title');
+  const orgEl = document.getElementById('modal-organization');
+  if (titleEl) titleEl.textContent = title;
+  if (orgEl) orgEl.textContent = organization || '';
+
+  // Set Body Content
+  const descEl = document.getElementById('modal-description');
+  const phoneEl = document.getElementById('modal-phone-display');
+  if (descEl) descEl.textContent = description;
+  if (phoneEl) phoneEl.textContent = item.phone_number;
+
+  // Set Grid Labels & Values
+  const lblAvail = document.getElementById('label-modal-availability');
+  const valAvail = document.getElementById('modal-availability');
+  if (lblAvail) lblAvail.textContent = t.modalAvailability;
+  if (valAvail) valAvail.textContent = is247 ? t.badge247 : (item.availability || t.unknown);
+
+  const lblToll = document.getElementById('label-modal-tollfree');
+  const valToll = document.getElementById('modal-tollfree');
+  if (lblToll) lblToll.textContent = t.modalTollFree;
+  if (valToll) valToll.textContent = isTollFree ? t.yes : (item.toll_free === "False" ? t.no : t.unknown);
+
+  const lblCov = document.getElementById('label-modal-coverage');
+  const valCov = document.getElementById('modal-coverage');
+  if (lblCov) lblCov.textContent = t.modalCoverage;
+  if (valCov) valCov.textContent = item.coverage || t.unknown;
+
+  const lblVer = document.getElementById('label-modal-verified');
+  const valVer = document.getElementById('modal-verified');
+  if (lblVer) lblVer.textContent = t.modalVerified;
+  if (valVer) valVer.textContent = item.last_verified || t.unknown;
+
+  // Set Source Link
+  const sourceWrapper = document.getElementById('modal-source-wrapper');
+  const lblSource = document.getElementById('label-modal-source');
+  const sourceLink = document.getElementById('modal-source-link');
+  if (lblSource) lblSource.textContent = t.modalSource + ':';
+  if (item.source_url && sourceLink) {
+    sourceLink.href = item.source_url;
+    sourceLink.textContent = item.source_name || 'Link ↗';
+    if (sourceWrapper) sourceWrapper.style.display = 'flex';
+  } else if (sourceWrapper) {
+    sourceWrapper.style.display = 'none';
+  }
+
+  // Set Footer Action Buttons
+  const btnCall = document.getElementById('modal-btn-call');
+  const btnCopy = document.getElementById('modal-btn-copy');
+
+  if (btnCall) {
+    btnCall.href = `tel:${item.phone_number}`;
+    btnCall.className = `btn btn-call ${isEmergency ? 'btn-call-emergency' : ''}`;
+    btnCall.innerHTML = `
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+      ${t.callBtn} ${item.phone_number}
+    `;
+  }
+
+  if (btnCopy) {
+    btnCopy.onclick = (e) => {
+      e.stopPropagation();
+      copyToClipboard(item.phone_number, btnCopy);
+    };
+  }
+
+  // Show Modal
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeDetailsModal() {
+  const modal = document.getElementById('details-modal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+  document.body.style.overflow = '';
+  activeModalItem = null;
+}
+
+function setupModalEventListeners() {
+  const modal = document.getElementById('details-modal');
+  const closeBtn = document.getElementById('modal-close-btn');
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeDetailsModal();
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeDetailsModal();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && activeModalItem) {
+      closeDetailsModal();
+    }
+  });
+}
+
+// 16. MINIMAL vCARD EXPORT (.vcf)
 function exportSelectedVCard() {
   const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
   if (selectedItems.length === 0) return;
@@ -413,7 +627,7 @@ function exportSelectedVCard() {
   downloadFile(vcard, fileName, 'text/vcard;charset=utf-8');
 }
 
-// 16. MINIMAL CSV EXPORT (.csv) WITH UTF-8 BOM
+// 17. MINIMAL CSV EXPORT (.csv) WITH UTF-8 BOM
 function exportSelectedCSV() {
   const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
   if (selectedItems.length === 0) return;
@@ -449,7 +663,7 @@ function downloadFile(content, fileName, mimeType) {
   URL.revokeObjectURL(url);
 }
 
-// 17. RESET FILTERS ACTION
+// 18. RESET FILTERS ACTION
 function resetFilters() {
   currentCategory = 'All';
   searchQuery = '';
@@ -459,7 +673,7 @@ function resetFilters() {
   renderFilteredContacts();
 }
 
-// 18. COPY TO CLIPBOARD HELPER
+// 19. COPY TO CLIPBOARD HELPER
 function copyToClipboard(text, btnElement) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => showCopyFeedback(btnElement)).catch(() => fallbackCopy(text, btnElement));
