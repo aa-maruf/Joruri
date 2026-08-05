@@ -908,6 +908,238 @@ html[lang="bn"] .disclaimer-text {
   font-family: var(--font-bn);
 }
 
+/* ==========================================================================
+   5C. CONTACT PAGE STYLES
+   ========================================================================== */
+.contact-hero-section {
+  text-align: center;
+  max-width: 720px;
+  margin: 0.5rem auto 2.25rem auto;
+  width: 100%;
+}
+
+.contact-hero-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-green);
+  background-color: #DCFCE7;
+  border: 1px solid #86EFAC;
+  padding: 0.25rem 0.75rem;
+  border-radius: 14px;
+  margin-bottom: 0.85rem;
+}
+
+.contact-hero-title {
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+html[lang="bn"] .contact-hero-title {
+  font-family: var(--font-bn);
+  line-height: 1.35;
+}
+
+.contact-hero-desc {
+  font-size: 1.075rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+html[lang="bn"] .contact-hero-desc {
+  font-family: var(--font-bn);
+}
+
+.contact-section {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.contact-card-box {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.contact-section-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--primary-green);
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+html[lang="bn"] .contact-section-title {
+  font-family: var(--font-bn);
+}
+
+.contact-text {
+  font-size: 0.975rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0.85rem;
+}
+
+html[lang="bn"] .contact-text {
+  font-family: var(--font-bn);
+}
+
+.contact-help-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.contact-help-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+html[lang="bn"] .contact-help-list li {
+  font-family: var(--font-bn);
+}
+
+.contact-help-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0.25rem;
+  top: 0;
+  color: var(--primary-green);
+  font-weight: 800;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.contact-urgent-notice {
+  font-size: 0.925rem;
+  color: #B91C1C;
+  background-color: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+}
+
+html[lang="bn"] .contact-urgent-notice {
+  font-family: var(--font-bn);
+}
+
+/* Informational Cards (3 Options) */
+.contact-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.contact-option-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.option-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.option-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+html[lang="bn"] .option-card-title {
+  font-family: var(--font-bn);
+  color: var(--primary-green);
+}
+
+.option-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+html[lang="bn"] .option-card-desc {
+  font-family: var(--font-bn);
+}
+
+/* Contact Email Box */
+.contact-email-box {
+  background-color: #FAF8F5;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.email-icon {
+  font-size: 1.5rem;
+}
+
+.email-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.email-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+html[lang="bn"] .email-label {
+  font-family: var(--font-bn);
+}
+
+.email-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary-green);
+}
+
+html[lang="bn"] .email-value {
+  font-family: var(--font-bn);
+}
+
+/* Subtle Disclaimer Notice */
+.contact-disclaimer-notice {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+html[lang="bn"] .contact-disclaimer-notice {
+  font-family: var(--font-bn);
+}
+
+.disclaimer-mini-icon {
+  font-size: 0.95rem;
+}
+
 
 
 /* ==========================================================================
@@ -1667,7 +1899,7 @@ html[lang="bn"] .empty-desc {
 
 /* Tablet Screens (641px - 900px) */
 @media (max-width: 900px) {
-  .workflow-grid, .provides-grid {
+  .workflow-grid, .provides-grid, .contact-options-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1734,16 +1966,16 @@ html[lang="bn"] .empty-desc {
     padding-bottom: 2.5rem;
   }
 
-  /* Home & About Hero Adjustments */
-  .home-hero-section, .about-hero-section {
+  /* Home, About & Contact Hero Adjustments */
+  .home-hero-section, .about-hero-section, .contact-hero-section {
     margin-bottom: 2rem;
   }
 
-  .home-hero-title, .about-hero-title {
+  .home-hero-title, .about-hero-title, .contact-hero-title {
     font-size: 1.6rem;
   }
 
-  .home-hero-desc, .about-hero-desc {
+  .home-hero-desc, .about-hero-desc, .contact-hero-desc {
     font-size: 0.975rem;
   }
 
@@ -1758,13 +1990,13 @@ html[lang="bn"] .empty-desc {
     transform: rotate(90deg);
   }
 
-  /* Home & About Section Grids Stack Vertically on Mobile */
-  .workflow-grid, .capability-grid, .home-emergency-grid, .contact-grid, .purpose-pillars, .provides-grid {
+  /* Home, About & Contact Section Grids Stack Vertically on Mobile */
+  .workflow-grid, .capability-grid, .home-emergency-grid, .contact-grid, .purpose-pillars, .provides-grid, .contact-options-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  .saving-card-box, .about-card-box, .about-mission-box, .about-disclaimer-box {
+  .saving-card-box, .about-card-box, .about-mission-box, .about-disclaimer-box, .contact-card-box, .contact-email-box {
     padding: 1.25rem 1rem;
   }
 

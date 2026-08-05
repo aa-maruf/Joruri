@@ -9,6 +9,7 @@ const i18n = {
     navHome: "Home",
     navPhone: "Emergency Services",
     navAbout: "About",
+    navContact: "Contact",
     navWebsites: "Websites",
     navApps: "Apps",
     soonBadge: "Soon",
@@ -91,6 +92,27 @@ const i18n = {
     aboutDisclaimerBanner: "Joruri is not an official government platform.",
     aboutDisclaimerText: "It is an independent public-service information hub created to make important service information easier for citizens to find and use. All contact details are compiled from verified public sources.",
 
+    // Contact Page View
+    contactBadge: "CONTACT US",
+    contactHeroTitle: "Get in Touch",
+    contactHeroDesc: "Have a suggestion, correction, or question about Joruri? We'd be happy to hear from you.",
+    contactHelpTitle: "How Can We Help?",
+    contactHelpIntro: "You can reach out to the Joruri team regarding:",
+    contactHelpItem1: "Incorrect or outdated public-service information",
+    contactHelpItem2: "Suggestions for new verified public-service numbers",
+    contactHelpItem3: "General feedback on improving the website experience",
+    contactHelpItem4: "General questions about Joruri and its directory",
+    contactUrgentNotice: "Urgent Assistance Notice: For emergencies or urgent public-service assistance, please contact the appropriate official service directly rather than contacting Joruri.",
+    contactOpt1Title: "Suggestion",
+    contactOpt1Desc: "Have an idea that could make Joruri more useful for citizens?",
+    contactOpt2Title: "Correction",
+    contactOpt2Desc: "Found incorrect, outdated, or missing information on any card?",
+    contactOpt3Title: "General Question",
+    contactOpt3Desc: "Have a question about Joruri or how the platform operates?",
+    contactEmailLabel: "Official Contact Email:",
+    contactEmailValue: "[Contact email address will be available soon]",
+    contactDisclaimerText: "Joruri is an independent public-service information hub and is not an official government platform.",
+
     // Phone Directory View
     heroTitle: "Important Public-Service Contacts in Bangladesh",
     heroDesc: "Quickly find, copy, and dial emergency hotlines, healthcare support, and official government helplines.",
@@ -136,6 +158,7 @@ const i18n = {
     navHome: "হোম",
     navPhone: "জরুরির সেবা",
     navAbout: "জরুরি সম্পর্কে",
+    navContact: "যোগাযোগ",
     navWebsites: "ওয়েবসাইট",
     navApps: "অ্যাপস",
     soonBadge: "শীঘ্রই",
@@ -218,6 +241,27 @@ const i18n = {
     aboutDisclaimerBanner: "জরুরি কোনো সরকারি প্রাতিষ্ঠানিক প্ল্যাটফর্ম নয়।",
     aboutDisclaimerText: "এটি একটি স্বাধীন জনসেবামূলক তথ্য কেন্দ্র যা নাগরিকদের প্রয়োজনীয় সেবা খোঁজা ও ব্যবহারের প্রক্রিয়াকে সহজ করার জন্য তৈরি করা হয়েছে। সকল তথ্য নিবন্ধিত ও যাচাইকৃত অফিসিয়াল উৎস থেকে সংগৃহীত।",
 
+    // Contact Page View
+    contactBadge: "যোগাযোগ",
+    contactHeroTitle: "আমাদের সাথে যোগাযোগ করুন",
+    contactHeroDesc: "জরুরি সম্পর্কে কোনো পরামর্শ, সংশোধন বা প্রশ্ন আছে? আমাদের সাথে যোগাযোগ করুন।",
+    contactHelpTitle: "আমরা কীভাবে সাহায্য করতে পারি?",
+    contactHelpIntro: "নিম্নলিখিত বিষয়ে আপনি জরুরি টিমের সাথে যোগাযোগ করতে পারেন:",
+    contactHelpItem1: "ভুল বা পুরোনো কোনো সরকারি ও জরুরি সেবার তথ্য",
+    contactHelpItem2: "নতুন নতুন জরুরি বা জনসেবামূলক নম্বর অন্তর্ভুক্তির পরামর্শ",
+    contactHelpItem3: "ওয়েবসাইটের ডিজাইন বা অভিজ্ঞতা উন্নয়নের পরামর্শ",
+    contactHelpItem4: "জরুরি প্ল্যাটফর্ম সম্পর্কে যেকোনো সাধারণ জিজ্ঞাসা",
+    contactUrgentNotice: "তাৎক্ষণিক সেবা সংক্রান্ত জরুরি বিজ্ঞপ্তি: যেকোনো জরুরি বা তাৎক্ষণিক সেবার জন্য অনুগ্রহ করে জরুরি প্ল্যাটফর্মে যোগাযোগের বদলে সরাসরি সংশ্লিষ্ট মূল অফিসিয়াল নম্বরে কল করুন।",
+    contactOpt1Title: "পরামর্শ (Suggestion)",
+    contactOpt1Desc: "জরুরি-কে নাগরিকদের জন্য আরও উপযোগী করার কোনো মতামত আছে কি?",
+    contactOpt2Title: "তথ্য সংশোধন (Correction)",
+    contactOpt2Desc: "কোনো সেবার তথ্যে ভুল, অসঙ্গতি বা অসম্পূর্ণতা খুঁজে পেয়েছেন কি?",
+    contactOpt3Title: "সাধারণ প্রশ্ন (General Question)",
+    contactOpt3Desc: "জরুরি বা এর কার্যক্রম পরিচালনা সম্পর্কে কোনো প্রশ্ন আছে কি?",
+    contactEmailLabel: "অফিসিয়াল ইমেইল ঠিকানা:",
+    contactEmailValue: "[জরুরির ইমেইল ঠিকানা শীঘ্রই যুক্ত করা হবে]",
+    contactDisclaimerText: "জরুরি একটি স্বাধীন জনসেবামূলক তথ্য কেন্দ্র এবং এটি কোনো সরকারি প্রাতিষ্ঠানিক প্ল্যাটফর্ম নয়।",
+
     // Phone Directory View
     heroTitle: "বাংলাদেশের গুরুত্বপূর্ণ সরকারি ও জরুরি নম্বরসমূহ",
     heroDesc: "জরুরি সেবা, স্বাস্থ্যসেবা এবং সরকারি হেল্পলাইন নম্বর সহজে খুঁজুন, কপি করুন এবং সরাসরি কল করুন।",
@@ -267,6 +311,8 @@ if (window.location.hash === '#phone' || window.location.hash === '#directory') 
   currentView = 'phone';
 } else if (window.location.hash === '#about') {
   currentView = 'about';
+} else if (window.location.hash === '#contact') {
+  currentView = 'contact';
 }
 let currentCategory = 'All';
 let searchQuery = '';
@@ -313,6 +359,7 @@ function setupNavigationControls() {
   const navHome = document.getElementById('nav-home');
   const navPhone = document.getElementById('nav-phone');
   const navAbout = document.getElementById('nav-about');
+  const navContact = document.getElementById('nav-contact');
   const brandLink = document.getElementById('brand-link');
   const btnExplore = document.getElementById('home-btn-explore');
 
@@ -337,6 +384,13 @@ function setupNavigationControls() {
     });
   }
 
+  if (navContact) {
+    navContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('contact');
+    });
+  }
+
   if (brandLink) {
     brandLink.addEventListener('click', (e) => {
       e.preventDefault();
@@ -356,6 +410,8 @@ function setupNavigationControls() {
       hashView = 'phone';
     } else if (window.location.hash === '#about') {
       hashView = 'about';
+    } else if (window.location.hash === '#contact') {
+      hashView = 'contact';
     }
     if (hashView !== currentView) {
       switchView(hashView);
@@ -369,15 +425,18 @@ function switchView(viewName) {
   const viewHome = document.getElementById('view-home');
   const viewDirectory = document.getElementById('view-directory');
   const viewAbout = document.getElementById('view-about');
+  const viewContact = document.getElementById('view-contact');
   const navHome = document.getElementById('nav-home');
   const navPhone = document.getElementById('nav-phone');
   const navAbout = document.getElementById('nav-about');
+  const navContact = document.getElementById('nav-contact');
 
   if (viewHome) viewHome.style.display = 'none';
   if (viewDirectory) viewDirectory.style.display = 'none';
   if (viewAbout) viewAbout.style.display = 'none';
+  if (viewContact) viewContact.style.display = 'none';
 
-  [navHome, navPhone, navAbout].forEach(tab => {
+  [navHome, navPhone, navAbout, navContact].forEach(tab => {
     if (tab) {
       tab.classList.remove('active');
       tab.removeAttribute('aria-current');
@@ -398,6 +457,13 @@ function switchView(viewName) {
       navAbout.setAttribute('aria-current', 'page');
     }
     window.location.hash = 'about';
+  } else if (viewName === 'contact') {
+    if (viewContact) viewContact.style.display = 'block';
+    if (navContact) {
+      navContact.classList.add('active');
+      navContact.setAttribute('aria-current', 'page');
+    }
+    window.location.hash = 'contact';
   } else {
     if (viewDirectory) viewDirectory.style.display = 'block';
     if (navPhone) {
@@ -472,12 +538,14 @@ function applyLanguage(lang) {
   const navHome = document.getElementById('nav-home');
   const navPhone = document.getElementById('nav-phone');
   const navAbout = document.getElementById('nav-about');
+  const navContact = document.getElementById('nav-contact');
   const navWebsites = document.getElementById('nav-websites');
   const navApps = document.getElementById('nav-apps');
 
   if (navHome) navHome.textContent = t.navHome;
   if (navPhone) navPhone.textContent = t.navPhone;
   if (navAbout) navAbout.textContent = t.navAbout;
+  if (navContact) navContact.textContent = t.navContact;
   if (navWebsites) navWebsites.innerHTML = `${t.navWebsites} <span class="badge-soon">${t.soonBadge}</span>`;
   if (navApps) navApps.innerHTML = `${t.navApps} <span class="badge-soon">${t.soonBadge}</span>`;
 
@@ -668,6 +736,52 @@ function applyLanguage(lang) {
   if (aboutDisclaimerTitle) aboutDisclaimerTitle.textContent = t.aboutDisclaimerTitle;
   if (aboutDisclaimerBanner) aboutDisclaimerBanner.textContent = t.aboutDisclaimerBanner;
   if (aboutDisclaimerText) aboutDisclaimerText.textContent = t.aboutDisclaimerText;
+
+  // --- D. CONTACT PAGE TEXT UPDATES ---
+  const contactBadge = document.getElementById('contact-hero-badge');
+  const contactHeroTitle = document.getElementById('contact-hero-title');
+  const contactHeroDesc = document.getElementById('contact-hero-desc');
+  if (contactBadge) contactBadge.textContent = t.contactBadge;
+  if (contactHeroTitle) contactHeroTitle.textContent = t.contactHeroTitle;
+  if (contactHeroDesc) contactHeroDesc.textContent = t.contactHeroDesc;
+
+  const contactHelpTitle = document.getElementById('contact-help-title');
+  const contactHelpIntro = document.getElementById('contact-help-intro');
+  const contactHelpItem1 = document.getElementById('contact-help-item1');
+  const contactHelpItem2 = document.getElementById('contact-help-item2');
+  const contactHelpItem3 = document.getElementById('contact-help-item3');
+  const contactHelpItem4 = document.getElementById('contact-help-item4');
+  const contactUrgentNotice = document.getElementById('contact-urgent-notice');
+
+  if (contactHelpTitle) contactHelpTitle.textContent = t.contactHelpTitle;
+  if (contactHelpIntro) contactHelpIntro.textContent = t.contactHelpIntro;
+  if (contactHelpItem1) contactHelpItem1.textContent = t.contactHelpItem1;
+  if (contactHelpItem2) contactHelpItem2.textContent = t.contactHelpItem2;
+  if (contactHelpItem3) contactHelpItem3.textContent = t.contactHelpItem3;
+  if (contactHelpItem4) contactHelpItem4.textContent = t.contactHelpItem4;
+  if (contactUrgentNotice) contactUrgentNotice.innerHTML = `<strong>${lang === 'bn' ? 'তাৎক্ষণিক সেবা সংক্রান্ত জরুরি বিজ্ঞপ্তি:' : 'Urgent Assistance Notice:'}</strong> ${t.contactUrgentNotice.replace(/^Urgent Assistance Notice: |^তাৎক্ষণিক সেবা সংক্রান্ত জরুরি বিজ্ঞপ্তি: /, '')}`;
+
+  const contactOpt1Title = document.getElementById('contact-opt1-title');
+  const contactOpt1Desc = document.getElementById('contact-opt1-desc');
+  const contactOpt2Title = document.getElementById('contact-opt2-title');
+  const contactOpt2Desc = document.getElementById('contact-opt2-desc');
+  const contactOpt3Title = document.getElementById('contact-opt3-title');
+  const contactOpt3Desc = document.getElementById('contact-opt3-desc');
+
+  if (contactOpt1Title) contactOpt1Title.textContent = t.contactOpt1Title;
+  if (contactOpt1Desc) contactOpt1Desc.textContent = t.contactOpt1Desc;
+  if (contactOpt2Title) contactOpt2Title.textContent = t.contactOpt2Title;
+  if (contactOpt2Desc) contactOpt2Desc.textContent = t.contactOpt2Desc;
+  if (contactOpt3Title) contactOpt3Title.textContent = t.contactOpt3Title;
+  if (contactOpt3Desc) contactOpt3Desc.textContent = t.contactOpt3Desc;
+
+  const contactEmailLabel = document.getElementById('contact-email-label');
+  const contactEmailValue = document.getElementById('contact-email-value');
+  if (contactEmailLabel) contactEmailLabel.textContent = t.contactEmailLabel;
+  if (contactEmailValue) contactEmailValue.textContent = t.contactEmailValue;
+
+  const contactDisclaimerText = document.getElementById('contact-disclaimer-text');
+  if (contactDisclaimerText) contactDisclaimerText.textContent = t.contactDisclaimerText;
 
   // Footer Text
   const footerBrand = document.getElementById('footer-brand');
