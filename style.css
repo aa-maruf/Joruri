@@ -1,6 +1,6 @@
 /* ==========================================================================
-   JORURI (জরুরি) — Design System, Responsive Layout & Service Details Modal
-   Ref: UI-DESIGN-SPEC.md
+   JORURI (জরুরি) — Design System, Responsive Layout, Home Page & Directory
+   Ref: UI-DESIGN-SPEC.md & UI-DESIGN-SPEC-HOME.md
    ========================================================================== */
 
 /* 1. DESIGN TOKENS */
@@ -37,7 +37,7 @@
 
 html, body {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   background-color: var(--bg-color);
   color: var(--text-primary);
   font-family: var(--font-en);
@@ -60,12 +60,14 @@ html[lang="bn"] body {
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-.contact-card:focus-visible {
+.contact-card:focus-visible,
+.workflow-card:focus-visible,
+.capability-card:focus-visible {
   outline: 2.5px solid var(--primary-green);
   outline-offset: 2px;
 }
 
-/* 3. HEADER & NAVIGATION */
+/* 3. HEADER & NAVIGATION (Sticky Header) */
 .site-header {
   width: 100%;
   background-color: var(--card-bg);
@@ -73,6 +75,7 @@ input:focus-visible,
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
 }
 
 .header-inner {
@@ -134,6 +137,7 @@ input:focus-visible,
   align-items: center;
   gap: 0.35rem;
   white-space: nowrap;
+  transition: all 0.15s ease;
 }
 
 .nav-tab.active {
@@ -191,11 +195,433 @@ input:focus-visible,
   font-size: 0.85rem;
 }
 
-/* 4. MAIN CONTENT & HERO SECTION */
+/* 4. MAIN CONTENT CONTAINER & VIEW CONTROLLER */
 .main-content {
   padding-top: 1.75rem;
   padding-bottom: 3.5rem;
 }
+
+.page-view {
+  width: 100%;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ==========================================================================
+   5. HOME PAGE SPECIFIC STYLES (UI-DESIGN-SPEC-HOME.md)
+   ========================================================================== */
+
+/* Home Hero Section */
+.home-hero-section {
+  text-align: center;
+  max-width: 780px;
+  margin: 0.5rem auto 3rem auto;
+  width: 100%;
+}
+
+.home-hero-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-green);
+  background-color: #DCFCE7;
+  border: 1px solid #86EFAC;
+  padding: 0.25rem 0.75rem;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+}
+
+.home-hero-title {
+  font-size: 2.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.85rem;
+}
+
+html[lang="bn"] .home-hero-title {
+  font-family: var(--font-bn);
+  line-height: 1.3;
+}
+
+.home-hero-desc {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+html[lang="bn"] .home-hero-desc {
+  font-family: var(--font-bn);
+}
+
+.home-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.home-hero-actions .btn {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.95rem;
+  max-width: max-content;
+}
+
+.btn-hero-cta {
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 103, 71, 0.12);
+}
+
+/* Hero Flow Diagram */
+.home-hero-flow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  flex-wrap: wrap;
+}
+
+.flow-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+html[lang="bn"] .flow-pill {
+  font-family: var(--font-bn);
+}
+
+.flow-arrow {
+  color: var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* General Home Section Styling */
+.home-section {
+  margin-bottom: 3.5rem;
+  width: 100%;
+}
+
+.section-header-center {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary-green);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+}
+
+html[lang="bn"] .section-title {
+  font-family: var(--font-bn);
+}
+
+.section-line {
+  width: 48px;
+  height: 3px;
+  background-color: var(--primary-green);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* How Joruri Works (4 Steps) */
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.workflow-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.25rem;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.workflow-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.workflow-num {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--primary-green);
+  background-color: #DCFCE7;
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  margin-bottom: 0.85rem;
+}
+
+.workflow-icon-box {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.workflow-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+html[lang="bn"] .workflow-card-title {
+  font-family: var(--font-bn);
+  color: var(--primary-green);
+}
+
+.workflow-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+html[lang="bn"] .workflow-card-desc {
+  font-family: var(--font-bn);
+}
+
+/* Key Capabilities (3 Cards) */
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.capability-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.capability-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.capability-icon {
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.capability-stat {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary-green);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-en);
+}
+
+html[lang="bn"] .capability-stat {
+  font-family: var(--font-bn);
+}
+
+.capability-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+html[lang="bn"] .capability-label {
+  font-family: var(--font-bn);
+}
+
+.capability-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+html[lang="bn"] .capability-title {
+  font-family: var(--font-bn);
+  color: var(--primary-green);
+}
+
+.capability-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+html[lang="bn"] .capability-desc {
+  font-family: var(--font-bn);
+}
+
+/* Contact Saving Explanation Section */
+.home-saving-section {
+  width: 100%;
+}
+
+.saving-card-box {
+  background-color: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2rem;
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+}
+
+.saving-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary-green);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+
+html[lang="bn"] .saving-title {
+  font-family: var(--font-bn);
+}
+
+.saving-desc {
+  font-size: 0.975rem;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0 auto 1.75rem auto;
+  line-height: 1.55;
+}
+
+html[lang="bn"] .saving-desc {
+  font-family: var(--font-bn);
+}
+
+.saving-flow-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.saving-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: #FAF8F5;
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+html[lang="bn"] .saving-step {
+  font-family: var(--font-bn);
+}
+
+.saving-step-badge {
+  background-color: var(--primary-green);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saving-arrow {
+  color: var(--border-color);
+  font-weight: 700;
+}
+
+/* Home Top Emergency Numbers */
+.home-emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Service Directory CTA Section */
+.home-cta-section {
+  width: 100%;
+}
+
+.cta-box {
+  background: linear-gradient(135deg, #006747 0%, #004D35 100%);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0, 103, 71, 0.15);
+}
+
+.cta-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 0.5rem;
+}
+
+html[lang="bn"] .cta-title {
+  font-family: var(--font-bn);
+}
+
+.cta-desc {
+  font-size: 1rem;
+  color: #E2E8F0;
+  margin-bottom: 1.5rem;
+}
+
+html[lang="bn"] .cta-desc {
+  font-family: var(--font-bn);
+}
+
+.cta-box .btn-call {
+  background-color: #FFFFFF;
+  color: var(--primary-green);
+  font-size: 1rem;
+  padding: 0.75rem 1.75rem;
+}
+
+.cta-box .btn-call:hover {
+  background-color: #F8FAFC;
+  color: var(--primary-green-hover);
+}
+
+/* ==========================================================================
+   6. DIRECTORY & CARD COMMON STYLES (UI-DESIGN-SPEC.md)
+   ========================================================================== */
 
 .hero-section {
   text-align: center;
@@ -229,7 +655,7 @@ html[lang="bn"] .hero-description {
   font-family: var(--font-bn);
 }
 
-/* 5. SEARCH BAR */
+/* SEARCH BAR */
 .search-section {
   max-width: 640px;
   margin: 0 auto 1.5rem auto;
@@ -274,7 +700,7 @@ html[lang="bn"] .search-input {
   font-family: var(--font-bn);
 }
 
-/* 6. CATEGORY FILTERS */
+/* CATEGORY FILTERS */
 .categories-section {
   margin-bottom: 1.25rem;
   width: 100%;
@@ -318,7 +744,7 @@ html[lang="bn"] .category-btn {
   color: #FFFFFF;
 }
 
-/* 7. COMPACT SELECTION TOOLBAR (PHASE 3) */
+/* COMPACT SELECTION TOOLBAR (PHASE 3) */
 .selection-toolbar-section {
   width: 100%;
   margin-bottom: 1.25rem;
@@ -424,7 +850,7 @@ html[lang="bn"] .btn-export {
   font-family: var(--font-bn);
 }
 
-/* 8. CONTACT CARDS GRID & BADGES */
+/* CONTACT CARDS GRID & BADGES */
 .contacts-section {
   width: 100%;
 }
@@ -546,6 +972,7 @@ html[lang="bn"] .badge-tollfree {
   font-family: var(--font-bn);
 }
 
+/* Consistent Green Heading in both EN and BN */
 .service-title {
   font-size: 1.15rem;
   font-weight: 700;
@@ -624,6 +1051,17 @@ html[lang="bn"] .btn {
   background-color: var(--emergency-red-hover);
 }
 
+/* Primary Green Button (Hero CTA & Brand Primary) */
+.btn-primary-green {
+  background-color: var(--primary-green);
+  color: #FFFFFF;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary-green:hover {
+  background-color: var(--primary-green-hover);
+}
+
 /* Copy Button (Secondary Action) */
 .btn-copy {
   flex: 1;
@@ -673,7 +1111,7 @@ html[lang="bn"] .card-hover-affordance {
   }
 }
 
-/* 9. SERVICE DETAILS MODAL */
+/* SERVICE DETAILS MODAL */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -870,7 +1308,7 @@ html[lang="bn"] .empty-desc {
   margin-bottom: 1.25rem;
 }
 
-/* 10. FOOTER */
+/* FOOTER */
 .site-footer {
   width: 100%;
   background-color: var(--card-bg);
@@ -903,11 +1341,50 @@ html[lang="bn"] .empty-desc {
   color: #94A3B8;
 }
 
-/* 11. RESPONSIVE BREAKPOINTS (Mobile & Tablet Optimization) */
+/* ==========================================================================
+   7. ANIMATION KEYFRAMES & REDUCED MOTION SUPPORT
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-/* Tablet (2 columns) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .page-view {
+    animation: none;
+  }
+  .contact-card, .workflow-card, .capability-card {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE BREAKPOINTS (Mobile & Tablet Optimization)
+   ========================================================================== */
+
+/* Tablet Screens (641px - 900px) */
 @media (max-width: 900px) {
-  .contact-grid {
+  .workflow-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capability-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .home-emergency-grid, .contact-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -915,7 +1392,7 @@ html[lang="bn"] .empty-desc {
 /* Mobile Screens (360px - 640px) */
 @media (max-width: 640px) {
   .container {
-    padding: 0 1rem; /* 16px padding on mobile */
+    padding: 0 1rem;
   }
 
   .header-inner {
@@ -939,7 +1416,6 @@ html[lang="bn"] .empty-desc {
     font-size: 1.1rem;
   }
 
-  /* Navigation tab row with clean horizontal scrolling */
   .main-nav {
     order: 3;
     width: 100%;
@@ -962,28 +1438,62 @@ html[lang="bn"] .empty-desc {
     font-size: 0.875rem;
   }
 
-  /* Hero adjustments for mobile width */
   .main-content {
     padding-top: 1rem;
     padding-bottom: 2.5rem;
   }
 
-  .hero-section {
-    margin-bottom: 1rem;
+  /* Home Hero Adjustments */
+  .home-hero-section {
+    margin-bottom: 2rem;
   }
 
-  .hero-title {
-    font-size: 1.35rem;
-    line-height: 1.3;
-    margin-bottom: 0.35rem;
+  .home-hero-title {
+    font-size: 1.6rem;
   }
 
-  .hero-description {
-    font-size: 0.925rem;
-    line-height: 1.45;
+  .home-hero-desc {
+    font-size: 0.975rem;
   }
 
-  /* Search field full mobile content width */
+  .home-hero-flow {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+  }
+
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
+
+  /* Home Section Grids Stack Vertically on Mobile */
+  .workflow-grid, .capability-grid, .home-emergency-grid, .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .saving-card-box {
+    padding: 1.5rem 1rem;
+  }
+
+  .saving-flow-wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .saving-arrow {
+    transform: rotate(90deg);
+  }
+
+  .cta-box {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .cta-title {
+    font-size: 1.3rem;
+  }
+
   .search-section {
     margin-bottom: 1rem;
   }
@@ -997,7 +1507,6 @@ html[lang="bn"] .empty-desc {
     left: 0.85rem;
   }
 
-  /* Horizontally scrollable Category Filters on Mobile */
   .categories-section {
     margin-bottom: 1.25rem;
   }
@@ -1030,12 +1539,6 @@ html[lang="bn"] .empty-desc {
   .selection-actions {
     width: 100%;
     justify-content: flex-start;
-  }
-
-  /* Single Column Cards Layout taking full content width */
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
   }
 
   .contact-card {
@@ -1075,7 +1578,6 @@ html[lang="bn"] .empty-desc {
     grid-template-columns: 1fr;
   }
 
-  /* Footer full width on mobile */
   .site-footer {
     padding: 1.75rem 0;
   }

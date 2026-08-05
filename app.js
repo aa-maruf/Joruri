@@ -1,17 +1,64 @@
 /* ==========================================================================
-   JORURI (জরুরি) — App Logic & Service Details Modal Implementation
+   JORURI (জরুরি) — App Logic & Multi-Page View Controller
    ========================================================================== */
 
 // 1. I18N DICTIONARY FOR INTERFACE STRINGS
 const i18n = {
   en: {
-    heroTitle: "Important Public-Service Contacts in Bangladesh",
-    heroDesc: "Quickly find, copy, and dial emergency hotlines, healthcare support, and official government helplines.",
-    searchPlaceholder: "Search by service name, topic, or phone number...",
+    // Header & Navigation
+    navHome: "Home",
     navPhone: "Phone Numbers",
     navWebsites: "Websites",
     navApps: "Apps",
     soonBadge: "Soon",
+
+    // Home Page Hero & Workflow
+    homeHeroTitle: "Important Public-Service Information, All in One Place",
+    homeHeroDesc: "Joruri helps citizens quickly find important public-service phone numbers, call them directly, copy them, or export them to their phone contacts.",
+    homeExploreBtn: "Explore Emergency Services →",
+    homeLearnBtn: "Learn How It Works",
+    labelFlow1: "Find Service",
+    labelFlow2: "Check Details",
+    labelFlow3: "Call / Copy",
+    labelFlow4: "Save for Later",
+
+    homeWorkflowTitle: "HOW JORURI WORKS",
+    homeStep1Title: "Find a Service",
+    homeStep1Desc: "Search by service name, topic, category, or phone number.",
+    homeStep2Title: "Check Details",
+    homeStep2Desc: "Open any service card to view complete official information and availability.",
+    homeStep3Title: "Call or Copy",
+    homeStep3Desc: "Call instantly using your device or copy the number for later.",
+    homeStep4Title: "Save for Later",
+    homeStep4Desc: "Export selected numbers as CSV or vCard (.vcf) and import into your phone contacts.",
+
+    // Platform Capabilities
+    homeCapabilitiesTitle: "SIMPLE TO USE. EASY TO KEEP.",
+    homeStat1Number: "{count}+",
+    homeStat1Label: "Services Listed",
+    homeStat2Title: "CSV & vCard Export",
+    homeStat2Desc: "Select the numbers you need, export them, and import them into your phone's Contacts.",
+    homeStat3Number: "100%",
+    homeStat3Label: "Verified Sources",
+
+    // Contact Saving Explanation
+    homeSaveTitle: "TAKE IMPORTANT NUMBERS WITH YOU",
+    homeSaveDesc: "Select the public-service numbers you want to keep, export them as CSV or vCard (.vcf) files, then import them directly into your phone's address book for offline access.",
+    homeSaveFlow1: "Select Numbers",
+    homeSaveFlow2: "Export CSV / vCard",
+    homeSaveFlow3: "Import to Contacts",
+    homeSaveFlow4: "Available on Your Phone",
+
+    // Emergency Section & CTA
+    homeEmergencyTitle: "TOP EMERGENCY NUMBERS",
+    homeCtaTitle: "NEED MORE NUMBERS?",
+    homeCtaDesc: "Explore the complete Joruri public-service directory with search and category filters.",
+    homeCtaBtn: "View All Phone Numbers →",
+
+    // Phone Directory View
+    heroTitle: "Important Public-Service Contacts in Bangladesh",
+    heroDesc: "Quickly find, copy, and dial emergency hotlines, healthcare support, and official government helplines.",
+    searchPlaceholder: "Search by service name, topic, or phone number...",
     callBtn: "Call",
     copyBtn: "Copy",
     copiedMsg: "Copied!",
@@ -34,6 +81,7 @@ const i18n = {
     modalCoverage: "Coverage",
     modalVerified: "Verified Date",
     modalSource: "Official Source",
+
     categories: {
       "All": "All",
       "Emergency": "Emergency",
@@ -42,18 +90,66 @@ const i18n = {
       "Law & Order": "Law & Order",
       "Women & Children": "Women & Children"
     },
+
     footerBrand: "Joruri (জরুরি) — Public-Service Contact Directory",
     footerDisclaimer: "Disclaimer: Joruri is an independent public-service directory designed for citizen guidance. It is not an official government platform.",
     footerCopyright: "© 2026 Joruri. Information first."
   },
   bn: {
-    heroTitle: "বাংলাদেশের গুরুত্বপূর্ণ সরকারি ও জরুরি নম্বরসমূহ",
-    heroDesc: "জরুরি সেবা, স্বাস্থ্যসেবা এবং সরকারি হেল্পলাইন নম্বর সহজে খুঁজুন, কপি করুন এবং সরাসরি কল করুন।",
-    searchPlaceholder: "সেবার নাম, বিষয় বা ফোন নম্বর দিয়ে খুঁজুন...",
+    // Header & Navigation
+    navHome: "হোম",
     navPhone: "ফোন নম্বর",
     navWebsites: "ওয়েবসাইট",
     navApps: "অ্যাপস",
     soonBadge: "শীঘ্রই",
+
+    // Home Page Hero & Workflow
+    homeHeroTitle: "গুরুত্বপূর্ণ সরকারি ও জরুরি তথ্য, এক জায়গায়",
+    homeHeroDesc: "জরুরি নাগরিকদের সরকারি ও জরুরি সেবার নম্বর দ্রুত খুঁজতে, সরাসরি কল করতে, কপি করতে এবং নিজের ফোনে সেভ করে রাখার সুবিধা দেয়।",
+    homeExploreBtn: "জরুরি সেবাসমূহ দেখুন →",
+    homeLearnBtn: "কার্যপ্রণালী দেখুন",
+    labelFlow1: "সেবা খুঁজুন",
+    labelFlow2: "বিস্তারিত দেখুন",
+    labelFlow3: "কল / কপি",
+    labelFlow4: "সেভ করে রাখুন",
+
+    homeWorkflowTitle: "জরুরি যেভাবে কাজ করে",
+    homeStep1Title: "সেবা খুঁজুন",
+    homeStep1Desc: "সেবার নাম, বিষয়, ক্যাটাগরি বা নম্বর দিয়ে খুঁজুন।",
+    homeStep2Title: "বিস্তারিত দেখুন",
+    homeStep2Desc: "অফিসিয়াল তথ্য ও সময়সূচী দেখতে সেবার কার্ডটি চাপুন।",
+    homeStep3Title: "কল বা কপি করুন",
+    homeStep3Desc: "সরাসরি কল করতে ট্যাপ করুন অথবা নম্বরটি কপি করে রাখুন।",
+    homeStep4Title: "সেভ করে রাখুন",
+    homeStep4Desc: "নম্বর নির্বাচন করে CSV বা vCard ফাইল ডাউনলোড করুন এবং আপনার পরিচিতিতে ইম্পোর্ট করুন।",
+
+    // Platform Capabilities
+    homeCapabilitiesTitle: "ব্যবহারে সহজ। সংরক্ষণে সুবিধাজনক।",
+    homeStat1Number: "{count}+",
+    homeStat1Label: "নথিভুক্ত সেবাসমূহ",
+    homeStat2Title: "CSV ও vCard এক্সপোর্ট",
+    homeStat2Desc: "প্রয়োজনীয় নম্বর নির্বাচন করে এক্সপোর্ট করুন এবং আপনার ফোনে সেভ করুন।",
+    homeStat3Number: "১০০%",
+    homeStat3Label: "যাচাইকৃত অফিসিয়াল তথ্য",
+
+    // Contact Saving Explanation
+    homeSaveTitle: "জরুরি নম্বরগুলো সাথে রাখুন",
+    homeSaveDesc: "জরুরি নম্বরগুলো CSV বা vCard ফাইল হিসেবে নামিয়ে নিন এবং অফলাইনে ব্যবহারের জন্য সরাসরি আপনার ফোনের অ্যাড্রেস বুকে যুক্ত করুন।",
+    homeSaveFlow1: "নম্বর নির্বাচন",
+    homeSaveFlow2: "CSV / vCard এক্সপোর্ট",
+    homeSaveFlow3: "ফোনের পরিচিতিতে ইম্পোর্ট",
+    homeSaveFlow4: "আপনার ফোনে প্রস্তুত",
+
+    // Emergency Section & CTA
+    homeEmergencyTitle: "জরুরি শীর্ষ নম্বরসমূহ",
+    homeCtaTitle: "আরও নম্বর প্রয়োজন?",
+    homeCtaDesc: "ফিল্টার ও সার্চ সুবিধা সহ সম্পূর্ণ জরুরি ডিরেক্টরিটি ভিজিট করুন।",
+    homeCtaBtn: "সব নম্বর দেখুন →",
+
+    // Phone Directory View
+    heroTitle: "বাংলাদেশের গুরুত্বপূর্ণ সরকারি ও জরুরি নম্বরসমূহ",
+    heroDesc: "জরুরি সেবা, স্বাস্থ্যসেবা এবং সরকারি হেল্পলাইন নম্বর সহজে খুঁজুন, কপি করুন এবং সরাসরি কল করুন।",
+    searchPlaceholder: "সেবার নাম, বিষয় বা ফোন নম্বর দিয়ে খুঁজুন...",
     callBtn: "কল করুন",
     copyBtn: "কপি",
     copiedMsg: "কপি হয়েছে!",
@@ -76,6 +172,7 @@ const i18n = {
     modalCoverage: "আওতা",
     modalVerified: "যাচাইয়ের তারিখ",
     modalSource: "অফিসিয়াল উৎস",
+
     categories: {
       "All": "সব",
       "Emergency": "জরুরি",
@@ -84,6 +181,7 @@ const i18n = {
       "Law & Order": "আইন ও শৃঙ্খলা",
       "Women & Children": "নারী ও শিশু"
     },
+
     footerBrand: "জরুরি (Joruri) — গণসেবামূলক তথ্য ডিরেক্টরি",
     footerDisclaimer: "ডিসক্লেইমার: জরুরি একটি স্বাধীন জনসেবামূলক তথ্য প্ল্যাটফর্ম। এটি কোনো সরকারি প্রাতিষ্ঠানিক ওয়েবসাইট নয়।",
     footerCopyright: "© ২০২৬ জরুরি। তথ্যই অগ্রাধিকার।"
@@ -92,6 +190,7 @@ const i18n = {
 
 // 2. STATE MANAGEMENT
 let currentLang = localStorage.getItem('joruri_lang') || 'en';
+let currentView = (window.location.hash === '#phone' || window.location.hash === '#directory') ? 'phone' : 'home';
 let currentCategory = 'All';
 let searchQuery = '';
 const selectedIds = new Set();
@@ -102,10 +201,14 @@ const categoryKeys = ["All", "Emergency", "Healthcare", "Government", "Law & Ord
 // 3. INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
   setupLanguageControls();
+  setupNavigationControls();
   setupSearchInput();
   setupSelectionBarListeners();
   setupModalEventListeners();
+  
+  // Apply Language & Render Views
   applyLanguage(currentLang);
+  switchView(currentView);
 });
 
 // 4. LANGUAGE SWITCHER SETUP
@@ -128,7 +231,93 @@ function switchLanguage(lang) {
   applyLanguage(lang);
 }
 
-// 5. SEARCH INPUT LISTENER
+// 5. VIEW NAVIGATION CONTROLLER
+function setupNavigationControls() {
+  const navHome = document.getElementById('nav-home');
+  const navPhone = document.getElementById('nav-phone');
+  const brandLink = document.getElementById('brand-link');
+  const btnExplore = document.getElementById('home-btn-explore');
+  const btnCta = document.getElementById('home-btn-cta');
+
+  if (navHome) {
+    navHome.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('home');
+    });
+  }
+
+  if (navPhone) {
+    navPhone.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('phone');
+    });
+  }
+
+  if (brandLink) {
+    brandLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('home');
+    });
+  }
+
+  if (btnExplore) {
+    btnExplore.addEventListener('click', () => {
+      switchView('phone');
+    });
+  }
+
+  if (btnCta) {
+    btnCta.addEventListener('click', () => {
+      switchView('phone');
+    });
+  }
+
+  window.addEventListener('hashchange', () => {
+    const hashView = (window.location.hash === '#phone' || window.location.hash === '#directory') ? 'phone' : 'home';
+    if (hashView !== currentView) {
+      switchView(hashView);
+    }
+  });
+}
+
+function switchView(viewName) {
+  currentView = viewName;
+
+  const viewHome = document.getElementById('view-home');
+  const viewDirectory = document.getElementById('view-directory');
+  const navHome = document.getElementById('nav-home');
+  const navPhone = document.getElementById('nav-phone');
+
+  if (viewName === 'home') {
+    if (viewHome) viewHome.style.display = 'block';
+    if (viewDirectory) viewDirectory.style.display = 'none';
+    if (navHome) {
+      navHome.classList.add('active');
+      navHome.setAttribute('aria-current', 'page');
+    }
+    if (navPhone) {
+      navPhone.classList.remove('active');
+      navPhone.removeAttribute('aria-current');
+    }
+    window.location.hash = 'home';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    if (viewHome) viewHome.style.display = 'none';
+    if (viewDirectory) viewDirectory.style.display = 'block';
+    if (navPhone) {
+      navPhone.classList.add('active');
+      navPhone.setAttribute('aria-current', 'page');
+    }
+    if (navHome) {
+      navHome.classList.remove('active');
+      navHome.removeAttribute('aria-current');
+    }
+    window.location.hash = 'phone';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// 6. SEARCH INPUT LISTENER
 function setupSearchInput() {
   const searchInput = document.getElementById('search-input');
   if (!searchInput) return;
@@ -139,7 +328,7 @@ function setupSearchInput() {
   });
 }
 
-// 6. SELECTION BAR LISTENERS
+// 7. SELECTION BAR LISTENERS
 function setupSelectionBarListeners() {
   const selectAllCheckbox = document.getElementById('select-all-checkbox');
   const clearSelectionBtn = document.getElementById('clear-selection-btn');
@@ -171,7 +360,7 @@ function setupSelectionBarListeners() {
   }
 }
 
-// 7. APPLY LANGUAGE TO UI & RE-RENDER
+// 8. APPLY LANGUAGE TO UI & RE-RENDER
 function applyLanguage(lang) {
   const t = i18n[lang];
 
@@ -187,24 +376,107 @@ function applyLanguage(lang) {
   }
 
   // Update Header Navigation Labels
+  const navHome = document.getElementById('nav-home');
   const navPhone = document.getElementById('nav-phone');
   const navWebsites = document.getElementById('nav-websites');
   const navApps = document.getElementById('nav-apps');
+
+  if (navHome) navHome.textContent = t.navHome;
   if (navPhone) navPhone.textContent = t.navPhone;
   if (navWebsites) navWebsites.innerHTML = `${t.navWebsites} <span class="badge-soon">${t.soonBadge}</span>`;
   if (navApps) navApps.innerHTML = `${t.navApps} <span class="badge-soon">${t.soonBadge}</span>`;
 
-  // Update Hero Section Text
+  // --- A. HOME PAGE TEXT UPDATES ---
+  const homeHeroTitle = document.getElementById('home-hero-title');
+  const homeHeroDesc = document.getElementById('home-hero-desc');
+  const labelHomeExplore = document.getElementById('label-home-explore');
+  const labelHomeLearn = document.getElementById('label-home-learn');
+
+  if (homeHeroTitle) homeHeroTitle.textContent = t.homeHeroTitle;
+  if (homeHeroDesc) homeHeroDesc.textContent = t.homeHeroDesc;
+  if (labelHomeExplore) labelHomeExplore.textContent = t.homeExploreBtn;
+  if (labelHomeLearn) labelHomeLearn.textContent = t.homeLearnBtn;
+
+  const labelFlow1 = document.getElementById('label-flow-1');
+  const labelFlow2 = document.getElementById('label-flow-2');
+  const labelFlow3 = document.getElementById('label-flow-3');
+  const labelFlow4 = document.getElementById('label-flow-4');
+  if (labelFlow1) labelFlow1.textContent = t.labelFlow1;
+  if (labelFlow2) labelFlow2.textContent = t.labelFlow2;
+  if (labelFlow3) labelFlow3.textContent = t.labelFlow3;
+  if (labelFlow4) labelFlow4.textContent = t.labelFlow4;
+
+  const homeWorkflowTitle = document.getElementById('home-workflow-title');
+  const homeStep1Title = document.getElementById('home-step1-title');
+  const homeStep1Desc = document.getElementById('home-step1-desc');
+  const homeStep2Title = document.getElementById('home-step2-title');
+  const homeStep2Desc = document.getElementById('home-step2-desc');
+  const homeStep3Title = document.getElementById('home-step3-title');
+  const homeStep3Desc = document.getElementById('home-step3-desc');
+  const homeStep4Title = document.getElementById('home-step4-title');
+  const homeStep4Desc = document.getElementById('home-step4-desc');
+
+  if (homeWorkflowTitle) homeWorkflowTitle.textContent = t.homeWorkflowTitle;
+  if (homeStep1Title) homeStep1Title.textContent = t.homeStep1Title;
+  if (homeStep1Desc) homeStep1Desc.textContent = t.homeStep1Desc;
+  if (homeStep2Title) homeStep2Title.textContent = t.homeStep2Title;
+  if (homeStep2Desc) homeStep2Desc.textContent = t.homeStep2Desc;
+  if (homeStep3Title) homeStep3Title.textContent = t.homeStep3Title;
+  if (homeStep3Desc) homeStep3Desc.textContent = t.homeStep3Desc;
+  if (homeStep4Title) homeStep4Title.textContent = t.homeStep4Title;
+  if (homeStep4Desc) homeStep4Desc.textContent = t.homeStep4Desc;
+
+  const homeCapabilitiesTitle = document.getElementById('home-capabilities-title');
+  const homeStat1Number = document.getElementById('home-stat1-number');
+  const homeStat1Label = document.getElementById('home-stat1-label');
+  const homeStat2Title = document.getElementById('home-stat2-title');
+  const homeStat2Desc = document.getElementById('home-stat2-desc');
+  const homeStat3Number = document.getElementById('home-stat3-number');
+  const homeStat3Label = document.getElementById('home-stat3-label');
+
+  const totalContactsCount = (typeof contactsData !== 'undefined' && Array.isArray(contactsData)) ? contactsData.length : 14;
+
+  if (homeCapabilitiesTitle) homeCapabilitiesTitle.textContent = t.homeCapabilitiesTitle;
+  if (homeStat1Number) homeStat1Number.textContent = t.homeStat1Number.replace('{count}', formatCount(totalContactsCount, lang));
+  if (homeStat1Label) homeStat1Label.textContent = t.homeStat1Label;
+  if (homeStat2Title) homeStat2Title.textContent = t.homeStat2Title;
+  if (homeStat2Desc) homeStat2Desc.textContent = t.homeStat2Desc;
+  if (homeStat3Number) homeStat3Number.textContent = t.homeStat3Number;
+  if (homeStat3Label) homeStat3Label.textContent = t.homeStat3Label;
+
+  const homeSaveTitle = document.getElementById('home-save-title');
+  const homeSaveDesc = document.getElementById('home-save-desc');
+  const homeSaveFlow1 = document.getElementById('home-save-flow1');
+  const homeSaveFlow2 = document.getElementById('home-save-flow2');
+  const homeSaveFlow3 = document.getElementById('home-save-flow3');
+  const homeSaveFlow4 = document.getElementById('home-save-flow4');
+
+  if (homeSaveTitle) homeSaveTitle.textContent = t.homeSaveTitle;
+  if (homeSaveDesc) homeSaveDesc.textContent = t.homeSaveDesc;
+  if (homeSaveFlow1) homeSaveFlow1.textContent = t.homeSaveFlow1;
+  if (homeSaveFlow2) homeSaveFlow2.textContent = t.homeSaveFlow2;
+  if (homeSaveFlow3) homeSaveFlow3.textContent = t.homeSaveFlow3;
+  if (homeSaveFlow4) homeSaveFlow4.textContent = t.homeSaveFlow4;
+
+  const homeEmergencyTitle = document.getElementById('home-emergency-title');
+  const homeCtaTitle = document.getElementById('home-cta-title');
+  const homeCtaDesc = document.getElementById('home-cta-desc');
+  const labelHomeCtaBtn = document.getElementById('label-home-cta-btn');
+
+  if (homeEmergencyTitle) homeEmergencyTitle.textContent = t.homeEmergencyTitle;
+  if (homeCtaTitle) homeCtaTitle.textContent = t.homeCtaTitle;
+  if (homeCtaDesc) homeCtaDesc.textContent = t.homeCtaDesc;
+  if (labelHomeCtaBtn) labelHomeCtaBtn.textContent = t.homeCtaBtn;
+
+  // --- B. DIRECTORY VIEW TEXT UPDATES ---
   const heroTitle = document.getElementById('hero-title');
   const heroDesc = document.getElementById('hero-desc');
   if (heroTitle) heroTitle.textContent = t.heroTitle;
   if (heroDesc) heroDesc.textContent = t.heroDesc;
 
-  // Update Search Placeholder
   const searchInput = document.getElementById('search-input');
   if (searchInput) searchInput.placeholder = t.searchPlaceholder;
 
-  // Update Selection Bar Labels
   const selectAllText = document.getElementById('select-all-text');
   const clearSelectionBtn = document.getElementById('clear-selection-btn');
   const labelExportVCard = document.getElementById('label-export-vcard');
@@ -215,18 +487,17 @@ function applyLanguage(lang) {
   if (labelExportVCard) labelExportVCard.textContent = t.exportVCard;
   if (labelExportCSV) labelExportCSV.textContent = t.exportCSV;
 
-  // Render Category Filter Buttons
+  // Render Dynamic Home Emergency Cards & Category Filters
+  renderHomeEmergencyCards();
   renderCategoryFilters();
-
-  // Render Contacts Grid & Selection Bar UI
   renderFilteredContacts();
 
-  // If modal is currently open, refresh modal content in new language
+  // If modal is open, refresh modal in new language
   if (activeModalItem) {
     openDetailsModal(activeModalItem.id);
   }
 
-  // Update Footer Text
+  // Footer Text
   const footerBrand = document.getElementById('footer-brand');
   const footerDisclaimer = document.getElementById('footer-disclaimer');
   const footerCopyright = document.getElementById('footer-copyright');
@@ -235,7 +506,73 @@ function applyLanguage(lang) {
   if (footerCopyright) footerCopyright.textContent = t.footerCopyright;
 }
 
-// 8. RENDER CATEGORY FILTER BUTTONS
+// 9. RENDER TOP EMERGENCY NUMBERS FOR HOME PAGE
+function renderHomeEmergencyCards() {
+  const container = document.getElementById('home-emergency-grid');
+  if (!container || typeof contactsData === 'undefined' || !Array.isArray(contactsData)) return;
+
+  const t = i18n[currentLang];
+  const emergencyIds = ["nat_999", "helpline_109", "child_1098"];
+  const featured = contactsData.filter(c => emergencyIds.includes(c.id));
+
+  container.innerHTML = featured.map(item => {
+    const isSelected = selectedIds.has(item.id);
+    const title = currentLang === 'bn' ? (item.service_name_bn || item.service_name_en) : (item.service_name_en || item.service_name_bn);
+    const description = currentLang === 'bn' ? (item.description_bn || item.description_en) : (item.description_en || item.description_bn);
+    
+    const categoryLabel = t.categories[item.category] || item.category;
+    const isEmergency = item.category === 'Emergency' || item.category === 'Women & Children';
+
+    return `
+      <article 
+        class="contact-card emergency-card ${isSelected ? 'selected' : ''}" 
+        data-id="${item.id}"
+        tabindex="0"
+        role="button"
+        aria-haspopup="dialog"
+        aria-label="${title}"
+        onclick="openDetailsModal('${item.id}')"
+        onkeydown="handleCardKeydown(event, '${item.id}')"
+      >
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="category-badge badge-emergency">${categoryLabel}</span>
+          </div>
+          <div class="extra-badges-container">
+            <span class="badge-247">${t.badge247}</span>
+            <span class="badge-tollfree">${t.tollFree}</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h2 class="service-title">${title}</h2>
+          <p class="service-description">${description}</p>
+          <div class="phone-number-display">${item.phone_number}</div>
+        </div>
+
+        <div class="card-footer-wrapper">
+          <div class="card-actions">
+            <a 
+              href="tel:${item.phone_number}" 
+              class="btn btn-call btn-call-emergency"
+              onclick="event.stopPropagation()"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              ${t.callBtn} ${item.phone_number}
+            </a>
+          </div>
+          <div class="card-hover-affordance">
+            <span class="view-details-text">${t.viewDetails}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+// 10. RENDER CATEGORY FILTER BUTTONS
 function renderCategoryFilters() {
   const container = document.getElementById('category-filters');
   if (!container) return;
@@ -255,14 +592,14 @@ function renderCategoryFilters() {
   }).join('');
 }
 
-// 9. SELECT CATEGORY ACTION
+// 11. SELECT CATEGORY ACTION
 function selectCategory(catKey) {
   currentCategory = catKey;
   renderCategoryFilters();
   renderFilteredContacts();
 }
 
-// 10. GET CURRENTLY VISIBLE CONTACTS
+// 12. GET CURRENTLY VISIBLE CONTACTS
 function getCurrentlyVisibleContacts() {
   if (typeof contactsData === 'undefined' || !Array.isArray(contactsData)) return [];
 
@@ -286,7 +623,7 @@ function getCurrentlyVisibleContacts() {
   });
 }
 
-// 11. FILTER LOGIC & CARD RENDERING
+// 13. FILTER LOGIC & CARD RENDERING FOR DIRECTORY
 function renderFilteredContacts() {
   const grid = document.getElementById('contact-grid');
   if (!grid) return;
@@ -397,7 +734,7 @@ function handleCardKeydown(event, id) {
   }
 }
 
-// 12. SELECTION HANDLERS
+// 14. SELECTION HANDLERS
 function toggleSelectContact(id, isChecked) {
   if (isChecked) {
     selectedIds.add(id);
@@ -432,7 +769,7 @@ function clearSelection() {
   renderFilteredContacts();
 }
 
-// 13. UPDATE SELECTION BAR UI
+// 15. UPDATE SELECTION BAR UI
 function updateSelectionBarUI(visibleItems = []) {
   const t = i18n[currentLang];
   const selectAllCheckbox = document.getElementById('select-all-checkbox');
@@ -456,14 +793,14 @@ function updateSelectionBarUI(visibleItems = []) {
   }
 }
 
-// 14. BANGLA NUMERAL FORMATTER
+// 16. BANGLA NUMERAL FORMATTER
 function formatCount(num, lang) {
   if (lang !== 'bn') return num.toString();
   const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
   return num.toString().replace(/\d/g, d => bnDigits[d]);
 }
 
-// 15. SERVICE DETAILS MODAL CONTROLLER
+// 17. SERVICE DETAILS MODAL CONTROLLER
 function openDetailsModal(id) {
   const item = contactsData.find(c => c.id === id);
   if (!item) return;
@@ -568,7 +905,7 @@ function openDetailsModal(id) {
 
   // Show Modal
   modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  document.body.style.overflow = 'hidden';
 }
 
 function closeDetailsModal() {
@@ -606,7 +943,7 @@ function setupModalEventListeners() {
   });
 }
 
-// 16. MINIMAL vCARD EXPORT (.vcf)
+// 18. MINIMAL vCARD EXPORT (.vcf)
 function exportSelectedVCard() {
   const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
   if (selectedItems.length === 0) return;
@@ -627,7 +964,7 @@ function exportSelectedVCard() {
   downloadFile(vcard, fileName, 'text/vcard;charset=utf-8');
 }
 
-// 17. MINIMAL CSV EXPORT (.csv) WITH UTF-8 BOM
+// 19. MINIMAL CSV EXPORT (.csv) WITH UTF-8 BOM
 function exportSelectedCSV() {
   const selectedItems = contactsData.filter(item => selectedIds.has(item.id));
   if (selectedItems.length === 0) return;
@@ -663,7 +1000,7 @@ function downloadFile(content, fileName, mimeType) {
   URL.revokeObjectURL(url);
 }
 
-// 18. RESET FILTERS ACTION
+// 20. RESET FILTERS ACTION
 function resetFilters() {
   currentCategory = 'All';
   searchQuery = '';
@@ -673,7 +1010,7 @@ function resetFilters() {
   renderFilteredContacts();
 }
 
-// 19. COPY TO CLIPBOARD HELPER
+// 21. COPY TO CLIPBOARD HELPER
 function copyToClipboard(text, btnElement) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => showCopyFeedback(btnElement)).catch(() => fallbackCopy(text, btnElement));

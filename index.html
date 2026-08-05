@@ -19,16 +19,17 @@
   <!-- 1. HEADER -->
   <header class="site-header">
     <div class="container header-inner">
-      <div class="brand">
+      <a href="#" id="brand-link" class="brand" aria-label="Joruri Home">
         <img src="./logo-Joruri(short).svg" alt="Joruri Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-en">Joruri</span>
           <span class="brand-bn">জরুরি</span>
         </div>
-      </div>
+      </a>
 
       <nav class="main-nav" aria-label="Main Navigation">
-        <a href="#" id="nav-phone" class="nav-tab active" aria-current="page">Phone Numbers</a>
+        <a href="#home" id="nav-home" class="nav-tab active" aria-current="page">Home</a>
+        <a href="#phone" id="nav-phone" class="nav-tab">Phone Numbers</a>
         <span id="nav-websites" class="nav-tab disabled">Websites <span class="badge-soon">Soon</span></span>
         <span id="nav-apps" class="nav-tab disabled">Apps <span class="badge-soon">Soon</span></span>
       </nav>
@@ -44,73 +45,227 @@
   <!-- MAIN CONTENT CONTAINER -->
   <main class="container main-content">
 
-    <!-- 2. HERO / PAGE INTRODUCTION -->
-    <section class="hero-section">
-      <h1 id="hero-title" class="hero-title">Important Public-Service Contacts in Bangladesh</h1>
-      <p id="hero-desc" class="hero-description">
-        Quickly find, copy, and dial emergency hotlines, healthcare support, and official government helplines.
-      </p>
-    </section>
-
-    <!-- 3. SEARCH BAR -->
-    <section class="search-section">
-      <div class="search-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input 
-          type="text" 
-          id="search-input"
-          class="search-input" 
-          placeholder="Search by service name, topic, or phone number..."
-          aria-label="Search public service contacts"
-        >
-      </div>
-    </section>
-
-    <!-- 4. CATEGORY FILTERS -->
-    <section class="categories-section">
-      <div id="category-filters" class="category-filters" role="group" aria-label="Category Filters">
-        <!-- Rendered dynamically by app.js based on current language -->
-      </div>
-    </section>
-
-    <!-- 5. COMPACT SELECTION & BULK ACTIONS TOOLBAR -->
-    <section class="selection-toolbar-section">
-      <div class="selection-toolbar">
-        <label class="select-all-label">
-          <input type="checkbox" id="select-all-checkbox" class="select-all-checkbox">
-          <span id="select-all-text">Select All</span>
-        </label>
-
-        <div id="selection-actions" class="selection-actions" style="display: none;">
-          <span id="selected-count-badge" class="selected-count-badge">0 selected</span>
-          <button id="clear-selection-btn" class="btn-text-action" type="button">Clear Selection</button>
+    <!-- ===================================================================
+         A. HOME PAGE VIEW (#view-home)
+         =================================================================== -->
+    <div id="view-home" class="page-view">
+      
+      <!-- HERO SECTION -->
+      <section class="home-hero-section">
+        <div class="home-hero-content">
+          <span class="home-hero-badge">Public Service Directory</span>
+          <h1 id="home-hero-title" class="home-hero-title">Important Public-Service Information, All in One Place</h1>
+          <p id="home-hero-desc" class="home-hero-desc">
+            Joruri helps citizens quickly find important public-service phone numbers, call them directly, copy them, or export them to their phone contacts.
+          </p>
+          <div class="home-hero-actions">
+            <button id="home-btn-explore" class="btn btn-primary-green btn-hero-cta" type="button">
+              <span id="label-home-explore">Explore Emergency Services →</span>
+            </button>
+            <a href="#how-it-works" id="home-btn-learn" class="btn btn-copy">
+              <span id="label-home-learn">Learn How It Works</span>
+            </a>
+          </div>
           
-          <button id="btn-export-vcard" class="btn btn-export" type="button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span id="label-export-vcard">vCard (.vcf)</span>
-          </button>
-          
-          <button id="btn-export-csv" class="btn btn-export" type="button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            <span id="label-export-csv">CSV (.csv)</span>
+          <!-- Hero Sequence Diagram -->
+          <div class="home-hero-flow">
+            <div class="flow-pill"><span class="flow-icon">🔎</span> <span id="label-flow-1">Find Service</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-pill"><span class="flow-icon">✓</span> <span id="label-flow-2">Check Details</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-pill"><span class="flow-icon">📞</span> <span id="label-flow-3">Call / Copy</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-pill"><span class="flow-icon">📁</span> <span id="label-flow-4">Save for Later</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW JORURI WORKS SECTION -->
+      <section id="how-it-works" class="home-section home-workflow-section">
+        <div class="section-header-center">
+          <h2 id="home-workflow-title" class="section-title">HOW JORURI WORKS</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="workflow-grid">
+          <div class="workflow-card">
+            <div class="workflow-num">01</div>
+            <div class="workflow-icon-box">🔎</div>
+            <h3 id="home-step1-title" class="workflow-card-title">Find a Service</h3>
+            <p id="home-step1-desc" class="workflow-card-desc">Search by service name, topic, category, or phone number.</p>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-num">02</div>
+            <div class="workflow-icon-box">✓</div>
+            <h3 id="home-step2-title" class="workflow-card-title">Check Details</h3>
+            <p id="home-step2-desc" class="workflow-card-desc">Open any service card to view complete official information and availability.</p>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-num">03</div>
+            <div class="workflow-icon-box">📞</div>
+            <h3 id="home-step3-title" class="workflow-card-title">Call or Copy</h3>
+            <p id="home-step3-desc" class="workflow-card-desc">Call instantly using your device or copy the number for later.</p>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-num">04</div>
+            <div class="workflow-icon-box">📁</div>
+            <h3 id="home-step4-title" class="workflow-card-title">Save for Later</h3>
+            <p id="home-step4-desc" class="workflow-card-desc">Export selected numbers as CSV or vCard (.vcf) and import into your phone contacts.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- KEY PLATFORM CAPABILITIES (3 CARDS) -->
+      <section class="home-section home-capabilities-section">
+        <div class="section-header-center">
+          <h2 id="home-capabilities-title" class="section-title">SIMPLE TO USE. EASY TO KEEP.</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="capability-grid">
+          <div class="capability-card">
+            <div class="capability-icon">📋</div>
+            <div id="home-stat1-number" class="capability-stat">14+</div>
+            <div id="home-stat1-label" class="capability-label">Services Listed</div>
+          </div>
+
+          <div class="capability-card">
+            <div class="capability-icon">💾</div>
+            <h3 id="home-stat2-title" class="capability-title">CSV & vCard Export</h3>
+            <p id="home-stat2-desc" class="capability-desc">Select the numbers you need, export them, and import them into your phone's Contacts.</p>
+          </div>
+
+          <div class="capability-card">
+            <div class="capability-icon">🛡️</div>
+            <div id="home-stat3-number" class="capability-stat">100%</div>
+            <div id="home-stat3-label" class="capability-label">Verified Sources</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT SAVING EXPLANATION -->
+      <section class="home-section home-saving-section">
+        <div class="saving-card-box">
+          <h2 id="home-save-title" class="saving-title">TAKE IMPORTANT NUMBERS WITH YOU</h2>
+          <p id="home-save-desc" class="saving-desc">
+            Select the public-service numbers you want to keep, export them as CSV or vCard (.vcf) files, then import them directly into your phone's address book for offline access.
+          </p>
+
+          <div class="saving-flow-wrapper">
+            <div class="saving-step"><span class="saving-step-badge">1</span> <span id="home-save-flow1">Select Numbers</span></div>
+            <span class="saving-arrow">→</span>
+            <div class="saving-step"><span class="saving-step-badge">2</span> <span id="home-save-flow2">Export CSV / vCard</span></div>
+            <span class="saving-arrow">→</span>
+            <div class="saving-step"><span class="saving-step-badge">3</span> <span id="home-save-flow3">Import to Contacts</span></div>
+            <span class="saving-arrow">→</span>
+            <div class="saving-step"><span class="saving-step-badge">4</span> <span id="home-save-flow4">Available on Your Phone</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOP EMERGENCY NUMBERS SECTION -->
+      <section class="home-section home-emergency-section">
+        <div class="section-header-center">
+          <h2 id="home-emergency-title" class="section-title">TOP EMERGENCY NUMBERS</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div id="home-emergency-grid" class="home-emergency-grid">
+          <!-- Populated dynamically by app.js from contactsData (999, 109, 1098) -->
+        </div>
+      </section>
+
+      <!-- SERVICE DIRECTORY CTA -->
+      <section class="home-section home-cta-section">
+        <div class="cta-box">
+          <h2 id="home-cta-title" class="cta-title">NEED MORE NUMBERS?</h2>
+          <p id="home-cta-desc" class="cta-desc">Explore the complete Joruri public-service directory with search and category filters.</p>
+          <button id="home-btn-cta" class="btn btn-call" type="button">
+            <span id="label-home-cta-btn">View All Phone Numbers →</span>
           </button>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 6. CONTACT CARDS GRID -->
-    <section class="contacts-section">
-      <div id="contact-grid" class="contact-grid">
-        <!-- All 14 contact cards are rendered dynamically by app.js from contacts.js -->
-      </div>
-    </section>
+    </div>
+
+
+    <!-- ===================================================================
+         B. PHONE NUMBERS DIRECTORY VIEW (#view-directory)
+         =================================================================== -->
+    <div id="view-directory" class="page-view" style="display: none;">
+      
+      <!-- HERO / PAGE INTRODUCTION -->
+      <section class="hero-section">
+        <h1 id="hero-title" class="hero-title">Important Public-Service Contacts in Bangladesh</h1>
+        <p id="hero-desc" class="hero-description">
+          Quickly find, copy, and dial emergency hotlines, healthcare support, and official government helplines.
+        </p>
+      </section>
+
+      <!-- SEARCH BAR -->
+      <section class="search-section">
+        <div class="search-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="search-input"
+            class="search-input" 
+            placeholder="Search by service name, topic, or phone number..."
+            aria-label="Search public service contacts"
+          >
+        </div>
+      </section>
+
+      <!-- CATEGORY FILTERS -->
+      <section class="categories-section">
+        <div id="category-filters" class="category-filters" role="group" aria-label="Category Filters">
+          <!-- Rendered dynamically by app.js based on current language -->
+        </div>
+      </section>
+
+      <!-- COMPACT SELECTION & BULK ACTIONS TOOLBAR -->
+      <section class="selection-toolbar-section">
+        <div class="selection-toolbar">
+          <label class="select-all-label">
+            <input type="checkbox" id="select-all-checkbox" class="select-all-checkbox">
+            <span id="select-all-text">Select All</span>
+          </label>
+
+          <div id="selection-actions" class="selection-actions" style="display: none;">
+            <span id="selected-count-badge" class="selected-count-badge">0 selected</span>
+            <button id="clear-selection-btn" class="btn-text-action" type="button">Clear Selection</button>
+            
+            <button id="btn-export-vcard" class="btn btn-export" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span id="label-export-vcard">vCard (.vcf)</span>
+            </button>
+            
+            <button id="btn-export-csv" class="btn btn-export" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <span id="label-export-csv">CSV (.csv)</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT CARDS GRID -->
+      <section class="contacts-section">
+        <div id="contact-grid" class="contact-grid">
+          <!-- All 14 contact cards are rendered dynamically by app.js from contacts.js -->
+        </div>
+      </section>
+
+    </div>
 
   </main>
 
-  <!-- 7. SERVICE DETAILS MODAL -->
+  <!-- SERVICE DETAILS MODAL -->
   <div id="details-modal" class="modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-service-title">
     <div class="modal-card">
       <button id="modal-close-btn" class="modal-close-btn" type="button" aria-label="Close modal">&times;</button>
@@ -162,7 +317,7 @@
     </div>
   </div>
 
-  <!-- 8. FOOTER -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div id="footer-brand" class="footer-brand">
