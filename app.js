@@ -7,7 +7,7 @@ const i18n = {
   en: {
     // Header & Navigation
     navHome: "Home",
-    navPhone: "Phone Numbers",
+    navPhone: "Emergency Services",
     navWebsites: "Websites",
     navApps: "Apps",
     soonBadge: "Soon",
@@ -49,11 +49,8 @@ const i18n = {
     homeSaveFlow3: "Import to Contacts",
     homeSaveFlow4: "Available on Your Phone",
 
-    // Emergency Section & CTA
+    // Emergency Section
     homeEmergencyTitle: "TOP EMERGENCY NUMBERS",
-    homeCtaTitle: "NEED MORE NUMBERS?",
-    homeCtaDesc: "Explore the complete Joruri public-service directory with search and category filters.",
-    homeCtaBtn: "View All Phone Numbers →",
 
     // Phone Directory View
     heroTitle: "Important Public-Service Contacts in Bangladesh",
@@ -98,7 +95,7 @@ const i18n = {
   bn: {
     // Header & Navigation
     navHome: "হোম",
-    navPhone: "ফোন নম্বর",
+    navPhone: "জরুরির সেবা",
     navWebsites: "ওয়েবসাইট",
     navApps: "অ্যাপস",
     soonBadge: "শীঘ্রই",
@@ -140,11 +137,8 @@ const i18n = {
     homeSaveFlow3: "ফোনের পরিচিতিতে ইম্পোর্ট",
     homeSaveFlow4: "আপনার ফোনে প্রস্তুত",
 
-    // Emergency Section & CTA
+    // Emergency Section
     homeEmergencyTitle: "জরুরি শীর্ষ নম্বরসমূহ",
-    homeCtaTitle: "আরও নম্বর প্রয়োজন?",
-    homeCtaDesc: "ফিল্টার ও সার্চ সুবিধা সহ সম্পূর্ণ জরুরি ডিরেক্টরিটি ভিজিট করুন।",
-    homeCtaBtn: "সব নম্বর দেখুন →",
 
     // Phone Directory View
     heroTitle: "বাংলাদেশের গুরুত্বপূর্ণ সরকারি ও জরুরি নম্বরসমূহ",
@@ -262,12 +256,6 @@ function setupNavigationControls() {
 
   if (btnExplore) {
     btnExplore.addEventListener('click', () => {
-      switchView('phone');
-    });
-  }
-
-  if (btnCta) {
-    btnCta.addEventListener('click', () => {
       switchView('phone');
     });
   }
@@ -459,14 +447,7 @@ function applyLanguage(lang) {
   if (homeSaveFlow4) homeSaveFlow4.textContent = t.homeSaveFlow4;
 
   const homeEmergencyTitle = document.getElementById('home-emergency-title');
-  const homeCtaTitle = document.getElementById('home-cta-title');
-  const homeCtaDesc = document.getElementById('home-cta-desc');
-  const labelHomeCtaBtn = document.getElementById('label-home-cta-btn');
-
   if (homeEmergencyTitle) homeEmergencyTitle.textContent = t.homeEmergencyTitle;
-  if (homeCtaTitle) homeCtaTitle.textContent = t.homeCtaTitle;
-  if (homeCtaDesc) homeCtaDesc.textContent = t.homeCtaDesc;
-  if (labelHomeCtaBtn) labelHomeCtaBtn.textContent = t.homeCtaBtn;
 
   // --- B. DIRECTORY VIEW TEXT UPDATES ---
   const heroTitle = document.getElementById('hero-title');
